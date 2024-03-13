@@ -7,15 +7,14 @@ import 'package:virtual_hospital/services/firebase_auth_services.dart';
 class AuthenticationController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  FirebaseAuthService _authService = FirebaseAuthService();
+  final FirebaseAuthService _authService = FirebaseAuthService();
 
   void signUp() async {
     String email = emailController.text;
     String password = emailController.text;
     User? user = await _authService.signUpWithEmailAndPassword(email, password);
-    if (user != null) {
-      print("User Created Sucessfully");
-      Get.to(() => HomePage());
+    if (user != null) {     
+      Get.to(() => const HomePage());
     } else {
       print("Error Occured");
     }
