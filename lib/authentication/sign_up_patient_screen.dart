@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/common/input_decoration.dart';
-import 'package:virtual_hospital/home_page.dart';
-import 'package:virtual_hospital/services/firebase_auth_services.dart';
+import 'package:virtual_hospital/controllers/authentication_controller.dart';
+
 
 class SignUpScreenPatient extends StatefulWidget {
   const SignUpScreenPatient({super.key});
@@ -14,28 +13,19 @@ class SignUpScreenPatient extends StatefulWidget {
 }
 
 class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
-  final FirebaseAuthService _authService = FirebaseAuthService();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+
+AuthenticationController _authenticationController =
+      Get.put(AuthenticationController());
+ 
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    _authenticationController.emailController.dispose();
+    _authenticationController.passwordController.dispose();
     super.dispose();
   }
 
-  void signUp() async {
-    String email = emailController.text;
-    String password = emailController.text;
-    User? user = await _authService.signUpWithEmailAndPassword(email, password);
-    if (user != null) {
-      print("User Created Sucessfully");
-      Get.to(() => HomePage());
-    } else {
-      print("Error Occured");
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +61,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                 height: 50,
                 decoration: FormInputField.formTextFieldContainer(context),
                 child: TextField(
-                    controller: emailController,
+                    controller: _authenticationController.emailController,
                     style: GoogleFonts.plusJakartaSans(
                         color: Colors.black, fontWeight: FontWeight.w400),
                     decoration: FormInputField.textFieldInputDecoration(
@@ -85,7 +75,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                 height: 50,
                 decoration: FormInputField.formTextFieldContainer(context),
                 child: TextField(
-                  controller: passwordController,
+                  controller: _authenticationController.passwordController,
                   style: GoogleFonts.plusJakartaSans(
                       color: Colors.black, fontWeight: FontWeight.w400),
                   obscureText: true,
@@ -99,7 +89,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
               ),
               GestureDetector(
                 onTap: () {
-                  signUp();
+                  _authenticationController.signUp();
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.0625,
