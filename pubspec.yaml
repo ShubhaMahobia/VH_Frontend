@@ -40,6 +40,7 @@ dependencies:
   flutter_localization: ^0.2.0
   google_fonts: ^6.2.0
   get: ^4.6.6
+  shared_preferences: ^2.2.2
   
 
 dev_dependencies:

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:virtual_hospital/authentication/login_screen.dart';
-import 'package:virtual_hospital/common/input_decoration.dart';
-import 'package:virtual_hospital/controllers/authentication_controller.dart';
-
+import 'package:virtual_hospital/doctor/authentication/login_screen.dart';
+import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
+import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
+import 'package:virtual_hospital/patient/authentication/create_profile.dart';
 
 class SignUpScreenPatient extends StatefulWidget {
   const SignUpScreenPatient({super.key});
@@ -14,10 +14,8 @@ class SignUpScreenPatient extends StatefulWidget {
 }
 
 class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
-
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
- 
 
   @override
   void dispose() {
@@ -25,8 +23,6 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
     _authenticationController.passwordController.dispose();
     super.dispose();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +80,12 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                       context, 'Password'),
                 ),
               ),
-              
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.04,
               ),
               GestureDetector(
                 onTap: () {
-                  _authenticationController.signUp();
+                  Get.to(() => CreateProfilePatient());
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.0625,
@@ -101,7 +96,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                   ),
                   child: Center(
                     child: Text(
-                      'Create Account',
+                      'Proceed',
                       style: GoogleFonts.plusJakartaSans(
                           color: Colors.white, fontWeight: FontWeight.w500),
                     ),

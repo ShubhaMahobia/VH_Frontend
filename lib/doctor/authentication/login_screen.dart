@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:virtual_hospital/authentication/sign_up_patient_screen.dart';
-import 'package:virtual_hospital/common/input_decoration.dart';
-import 'package:virtual_hospital/controllers/authentication_controller.dart';
+import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
+import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
+import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

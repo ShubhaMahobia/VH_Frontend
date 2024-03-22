@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:virtual_hospital/authentication/sign_up_patient_screen.dart';
+import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
 import 'package:virtual_hospital/firebase_options.dart';
 
 void main() async {
