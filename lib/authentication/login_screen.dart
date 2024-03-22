@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:virtual_hospital/authentication/login_screen.dart';
+import 'package:virtual_hospital/authentication/sign_up_patient_screen.dart';
 import 'package:virtual_hospital/common/input_decoration.dart';
 import 'package:virtual_hospital/controllers/authentication_controller.dart';
 
-
-class SignUpScreenPatient extends StatefulWidget {
-  const SignUpScreenPatient({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignUpScreenPatient> createState() => _SignUpScreenPatientState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
-
+class _LoginScreenState extends State<LoginScreen> {
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
- 
 
   @override
   void dispose() {
@@ -25,8 +22,6 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
     _authenticationController.passwordController.dispose();
     super.dispose();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +36,14 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Welcome',
+                'Welcome Back',
                 style: GoogleFonts.plusJakartaSans(
                     fontSize: 18, fontWeight: FontWeight.normal),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: Text(
-                  'Sign up for the Best Experience',
+                  'Sign in for the Best Experience',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.plusJakartaSans(
                       fontSize: 28, fontWeight: FontWeight.bold),
@@ -84,13 +79,12 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                       context, 'Password'),
                 ),
               ),
-              
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.04,
               ),
               GestureDetector(
                 onTap: () {
-                  _authenticationController.signUp();
+                  _authenticationController.signIn();
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.0625,
@@ -101,7 +95,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                   ),
                   child: Center(
                     child: Text(
-                      'Create Account',
+                      'Sign In',
                       style: GoogleFonts.plusJakartaSans(
                           color: Colors.white, fontWeight: FontWeight.w500),
                     ),
@@ -120,7 +114,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                 height: MediaQuery.of(context).size.height * 0.025,
               ),
               Text(
-                "Already have an account?",
+                "Not have an Account?",
                 style: GoogleFonts.plusJakartaSans(
                     fontSize: 14, fontWeight: FontWeight.w400),
               ),
@@ -129,7 +123,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => const LoginScreen(),
+                  Get.to(() => const SignUpScreenPatient(),
                       transition: Transition.noTransition);
                 },
                 child: Container(
@@ -141,7 +135,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                   ),
                   child: Center(
                     child: Text(
-                      'Sign In',
+                      'Sign Up',
                       style: GoogleFonts.plusJakartaSans(
                           color: Colors.blueAccent,
                           fontWeight: FontWeight.w500),

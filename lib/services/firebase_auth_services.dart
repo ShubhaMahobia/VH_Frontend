@@ -19,8 +19,7 @@ class FirebaseAuthService {
       String email, String password) async {
     try {
       UserCredential credential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      print("User Sign in Sucessfully");
+          email: email, password: password); 
       return credential.user;
     } catch (e) {
       print("Some Error Occured");
