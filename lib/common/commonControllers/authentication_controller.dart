@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:virtual_hospital/home_page.dart';
+import 'package:virtual_hospital/patient/home_page.dart';
 import 'package:virtual_hospital/services/firebase_auth_services.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,7 +18,7 @@ class AuthenticationController extends GetxController {
     String password = emailController.text;
     User? user = await _authService.signUpWithEmailAndPassword(email, password);
     if (user != null) {     
-      Get.to(() => const HomePage());
+      Get.to(() => const PatientHomePage());
     } else {
       print("Error Occured");
     }
