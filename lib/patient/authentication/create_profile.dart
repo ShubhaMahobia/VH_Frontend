@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/common/components/buttons/b1.dart';
 import 'package:virtual_hospital/common/components/dropdowns/custom_dropdown.dart';
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
+import 'package:virtual_hospital/patient/controller/home_page.dart';
 
 class CreateProfilePatient extends StatelessWidget {
   const CreateProfilePatient({super.key});
@@ -116,7 +118,7 @@ class CreateProfilePatient extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
+              const Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CustomDropdown(),
               ),
@@ -142,7 +144,13 @@ class CreateProfilePatient extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: ButtonOne(buttonText: 'Create Account'),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => const PatientHomePage(),
+                        transition: Transition.cupertino);
+                  },
+                  child: ButtonOne(buttonText: 'Create Account'),
+                ),
               ),
             ],
           ),
