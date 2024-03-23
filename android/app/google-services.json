@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1052472595836",
+    "project_id": "virtualhospital-e9b10",
+    "storage_bucket": "virtualhospital-e9b10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052472595836:android:f9266603882b0903db40f9",
+        "android_client_info": {
+          "package_name": "com.example.virtual_hospital"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYBqGBATE8DHCmBeyu4JcdIFtBODCS8h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
