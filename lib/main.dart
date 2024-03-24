@@ -2,7 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:virtual_hospital/firebase_options.dart';
-import 'package:virtual_hospital/patient/controller/home_page.dart';
+import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const PatientHomePage(),
+      home: const SignUpScreenPatient(),
     );
   }
 }

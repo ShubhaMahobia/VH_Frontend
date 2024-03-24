@@ -1,4 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -10,7 +13,7 @@ class FirebaseAuthService {
           email: email, password: password);
       return credential.user;
     } catch (e) {
-      print(e);
+      ErrorSnackBar(textMsg: e as String).show(Get.context as BuildContext);
     }
     return null;
   }
@@ -22,7 +25,7 @@ class FirebaseAuthService {
           email: email, password: password); 
       return credential.user;
     } catch (e) {
-      print("Some Error Occured");
+      ErrorSnackBar(textMsg: e as String).show(Get.context as BuildContext);
     }
     return null;
   }

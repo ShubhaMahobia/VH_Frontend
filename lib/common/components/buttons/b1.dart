@@ -8,21 +8,18 @@ class ButtonOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.0625,
-        width: 320,
-        decoration: BoxDecoration(
-          color: Colors.blue,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Center(
-          child: Text(
-            buttonText,
-            style: GoogleFonts.plusJakartaSans(
-                color: Colors.white, fontWeight: FontWeight.w500),
-          ),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.0625,
+      width: 320,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Center(
+        child: Text(
+          buttonText,
+          style: GoogleFonts.plusJakartaSans(
+              color: Colors.white, fontWeight: FontWeight.w500),
         ),
       ),
     );

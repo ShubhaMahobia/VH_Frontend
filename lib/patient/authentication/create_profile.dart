@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 import 'package:virtual_hospital/common/components/buttons/b1.dart';
 import 'package:virtual_hospital/common/components/dropdowns/custom_dropdown.dart';
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
-import 'package:virtual_hospital/patient/controller/home_page.dart';
+
 
 class CreateProfilePatient extends StatelessWidget {
-  const CreateProfilePatient({super.key});
+  final AuthenticationController _authenticationController =
+      Get.put(AuthenticationController());
+  CreateProfilePatient({super.key});
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,8 @@ class CreateProfilePatient extends StatelessWidget {
                       decoration:
                           FormInputField.formTextFieldContainer(context),
                       child: TextField(
+                          controller:
+                              _authenticationController.firstNameController,
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -57,6 +64,8 @@ class CreateProfilePatient extends StatelessWidget {
                       decoration:
                           FormInputField.formTextFieldContainer(context),
                       child: TextField(
+                          controller:
+                              _authenticationController.lastNameController, 
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -77,13 +86,16 @@ class CreateProfilePatient extends StatelessWidget {
                   width: 320,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
+                      controller: _authenticationController.emailController,
                       enabled: false,
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                       decoration: FormInputField.textFieldInputDecoration(
-                          context, 'Mahobiashubham4@gmail.com')),
+                        context,
+                        _authenticationController.emailController.text,
+                      )),
                 ),
               ),
               Padding(
@@ -94,6 +106,7 @@ class CreateProfilePatient extends StatelessWidget {
                   width: 320,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
+                    controller: _authenticationController.phoneNumberController,
                     keyboardType: TextInputType.number,
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 14, fontWeight: FontWeight.bold),
@@ -110,6 +123,7 @@ class CreateProfilePatient extends StatelessWidget {
                   width: 320,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
+                    // controller: _authenticationController.dobController,
                     keyboardType: TextInputType.number,
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 14, fontWeight: FontWeight.bold),
@@ -119,7 +133,7 @@ class CreateProfilePatient extends StatelessWidget {
                 ),
               ),
               const Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child: CustomDropdown(),
               ),
               Padding(
@@ -130,6 +144,8 @@ class CreateProfilePatient extends StatelessWidget {
                   width: 320,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
+                    controller: _authenticationController
+                        .identificationNumberController,
                     inputFormatters: [LengthLimitingTextInputFormatter(12)],
                     keyboardType: TextInputType.number,
                     style: GoogleFonts.plusJakartaSans(
@@ -146,8 +162,7 @@ class CreateProfilePatient extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const PatientHomePage(),
-                        transition: Transition.cupertino);
+                    _authenticationController.createProfilePatient();
                   },
                   child: ButtonOne(buttonText: 'Create Account'),
                 ),
