@@ -11,7 +11,7 @@ import 'package:virtual_hospital/util/date_picker.dart';
 
 class CreateProfilePatient extends StatefulWidget {
 
-  CreateProfilePatient({super.key});
+  const CreateProfilePatient({super.key});
 
   @override
   State<CreateProfilePatient> createState() => _CreateProfilePatientState();
