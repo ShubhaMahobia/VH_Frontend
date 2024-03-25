@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 class PatientHomePage extends StatelessWidget {
   const PatientHomePage({super.key});
 
@@ -158,35 +159,7 @@ class PatientHomePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 70,
-        color: Colors.blue,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              height: 40,
-              width: 40,
-              color: Colors.white,
-            ),
-            Container(
-              height: 40,
-              width: 40,
-              color: Colors.white,
-            ),
-            Container(
-              height: 40,
-              width: 40,
-              color: Colors.white,
-            ),
-            Container(
-              height: 40,
-              width: 40,
-              color: Colors.white,
-            ),
-          ],
-        ),
-      ),
     );
+
   }
 }

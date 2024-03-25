@@ -6,9 +6,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_hospital/patient/authentication/create_profile.dart';
-import 'package:virtual_hospital/patient/home_page.dart';
 import 'package:virtual_hospital/services/firebase_auth_services.dart';
 import 'package:http/http.dart' as http;
+import 'package:virtual_hospital/util/footer.dart';
 import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 import 'package:virtual_hospital/util/snackbar/success_snackbar.dart';
 
@@ -47,7 +47,7 @@ class AuthenticationController extends GetxController {
       SuccessSnackbar(textMsg: 'Account created successfully')
           .show(Get.context as BuildContext);
       await Future.delayed(const Duration(seconds: 2))
-          .then((value) => Get.to(() => CreateProfilePatient()));
+          .then((value) => Get.to(() => const CreateProfilePatient()));
     } catch (e) {
       EasyLoading.dismiss();
     }
@@ -76,7 +76,7 @@ class AuthenticationController extends GetxController {
       SuccessSnackbar(textMsg: 'Login successful')
           .show(Get.context as BuildContext);
       await Future.delayed(const Duration(seconds: 1))
-          .then((value) => Get.to(() => const PatientHomePage()));
+          .then((value) => Get.to(() => const LandingPage()));
     } catch (e) {
       EasyLoading.dismiss();
     }
@@ -129,13 +129,12 @@ class AuthenticationController extends GetxController {
       );
      
       var jsonData = json.decode(res.body);
-      print(jsonData);
       if (jsonData['success']) {
         SuccessSnackbar(textMsg: 'Profile created successfully')
             .show(Get.context as BuildContext);
         EasyLoading.dismiss();    
         await Future.delayed(const Duration(seconds: 1))
-            .then((value) => Get.to(() => const PatientHomePage()));
+            .then((value) => Get.to(() => const LandingPage()));
       } else {
         EasyLoading.dismiss(); 
         ErrorSnackBar(textMsg: 'Profile creation failed')

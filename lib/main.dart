@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:virtual_hospital/doctor/authentication/login_screen.dart';
 import 'package:virtual_hospital/firebase_options.dart';
-import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:virtual_hospital/patient/home_page.dart';
+import 'package:virtual_hospital/util/footer.dart';
 
 
 void main() async {
@@ -60,7 +59,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: user == null ? const LoginScreen() : const PatientHomePage(),
+      home: user == null ? const LoginScreen() : const LandingPage(),
       builder: EasyLoading.init(),
     );
   }
