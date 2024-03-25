@@ -12,8 +12,10 @@ class FirebaseAuthService {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       return credential.user;
-    } catch (e) {
-      ErrorSnackBar(textMsg: e as String).show(Get.context as BuildContext);
+    } on FirebaseAuthException catch (e) {
+      ErrorSnackBar(textMsg: e.message as String)
+          .show(Get.context as BuildContext);
+      
     }
     return null;
   }
@@ -22,10 +24,11 @@ class FirebaseAuthService {
       String email, String password) async {
     try {
       UserCredential credential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password); 
+          email: email, password: password);
       return credential.user;
-    } catch (e) {
-      ErrorSnackBar(textMsg: e as String).show(Get.context as BuildContext);
+    } on FirebaseAuthException catch (e) {
+      ErrorSnackBar(textMsg: e.message as String)
+          .show(Get.context as BuildContext);
     }
     return null;
   }

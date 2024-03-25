@@ -50,11 +50,7 @@ class AuthenticationController extends GetxController {
           .then((value) => Get.to(() => CreateProfilePatient()));
     } catch (e) {
       EasyLoading.dismiss();
-      if (e is FirebaseAuthException) {
-        e.message as String;
-        ErrorSnackBar(textMsg: e.message as String)
-            .show(Get.context as BuildContext);
-      }
+      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }
 
@@ -84,11 +80,7 @@ class AuthenticationController extends GetxController {
           .then((value) => Get.to(() => CreateProfilePatient()));
     } catch (e) {
       EasyLoading.dismiss();
-      if (e is FirebaseAuthException) {
-        e.message as String;
-        ErrorSnackBar(textMsg: e.message as String)
-            .show(Get.context as BuildContext);
-      }
+      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }
 
