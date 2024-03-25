@@ -6,14 +6,39 @@ import 'package:virtual_hospital/common/commonControllers/authentication_control
 import 'package:virtual_hospital/common/components/buttons/b1.dart';
 import 'package:virtual_hospital/common/components/dropdowns/custom_dropdown.dart';
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
+import 'package:virtual_hospital/util/date_picker.dart';
 
 
-class CreateProfilePatient extends StatelessWidget {
-  final AuthenticationController _authenticationController =
-      Get.put(AuthenticationController());
+class CreateProfilePatient extends StatefulWidget {
+
   CreateProfilePatient({super.key});
 
- 
+  @override
+  State<CreateProfilePatient> createState() => _CreateProfilePatientState();
+}
+
+class _CreateProfilePatientState extends State<CreateProfilePatient> {
+  @override
+  void initState() {
+    _authenticationController.firstNameController.clear();
+    _authenticationController.lastNameController.clear();
+    _authenticationController.dobController.clear();
+    _authenticationController.identificationNumberController.clear();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _authenticationController.firstNameController.dispose();
+    _authenticationController.lastNameController.dispose();
+    _authenticationController.dobController.dispose();
+    _authenticationController.emailController.dispose();
+    _authenticationController.identificationNumberController.dispose();
+    super.dispose();
+  }
+
+  final AuthenticationController _authenticationController =
+      Get.put(AuthenticationController());
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +131,7 @@ class CreateProfilePatient extends StatelessWidget {
                   width: 320,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
+                    inputFormatters: [LengthLimitingTextInputFormatter(12)],
                     controller: _authenticationController.phoneNumberController,
                     keyboardType: TextInputType.number,
                     style: GoogleFonts.plusJakartaSans(
@@ -117,20 +143,7 @@ class CreateProfilePatient extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 50,
-                  width: 320,
-                  decoration: FormInputField.formTextFieldContainer(context),
-                  child: TextField(
-                    // controller: _authenticationController.dobController,
-                    keyboardType: TextInputType.number,
-                    style: GoogleFonts.plusJakartaSans(
-                        fontSize: 14, fontWeight: FontWeight.bold),
-                    decoration: FormInputField.textFieldInputDecoration(
-                        context, 'Date of Birth*  (DD/MM/YYYY)'),
-                  ),
-                ),
+                child: CalendarWidget(),
               ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
