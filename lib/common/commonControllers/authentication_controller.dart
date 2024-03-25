@@ -50,7 +50,6 @@ class AuthenticationController extends GetxController {
           .then((value) => Get.to(() => CreateProfilePatient()));
     } catch (e) {
       EasyLoading.dismiss();
-      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }
 
@@ -77,10 +76,9 @@ class AuthenticationController extends GetxController {
       SuccessSnackbar(textMsg: 'Login successful')
           .show(Get.context as BuildContext);
       await Future.delayed(const Duration(seconds: 1))
-          .then((value) => Get.to(() => CreateProfilePatient()));
+          .then((value) => Get.to(() => const PatientHomePage()));
     } catch (e) {
       EasyLoading.dismiss();
-      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }
 
