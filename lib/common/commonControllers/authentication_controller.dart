@@ -18,6 +18,7 @@ class AuthenticationController extends GetxController {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController identificationNumberController =
       TextEditingController();
@@ -93,6 +94,31 @@ class AuthenticationController extends GetxController {
 
 //Create Profile Function Patient
   void createProfilePatient() async {
+    if (firstNameController.text.isEmpty) {
+      ErrorSnackBar(textMsg: 'First Name is required')
+          .show(Get.context as BuildContext);
+      return;
+    }
+    if (lastNameController.text.isEmpty) {
+      ErrorSnackBar(textMsg: 'Last Name is required')
+          .show(Get.context as BuildContext);
+      return;
+    }
+    if (dobController.text.isEmpty) {
+      ErrorSnackBar(textMsg: 'Date of Birth is required')
+          .show(Get.context as BuildContext);
+      return;
+    }
+    if (phoneNumberController.text.isEmpty) {
+      ErrorSnackBar(textMsg: 'Phone Number is required')
+          .show(Get.context as BuildContext);
+      return;
+    }
+    if (identificationNumberController.text.isEmpty) {
+      ErrorSnackBar(textMsg: 'Aadhar Number is required')
+          .show(Get.context as BuildContext);
+      return;
+    }
     try {
       EasyLoading.show(status: 'Loading...');
       String body = json.encode({
@@ -102,7 +128,7 @@ class AuthenticationController extends GetxController {
         "dateOfBirth": dobController.text,
         "email": emailController.text,
         "phoneNumber": phoneNumberController.text,
-        "gender": "male",
+        "gender": genderController.text,
         "identificationNumber": identificationNumberController.text,
       });
       http.Response res = await http.post(
@@ -113,6 +139,7 @@ class AuthenticationController extends GetxController {
       );
      
       var jsonData = json.decode(res.body);
+      print(jsonData);
       if (jsonData['success']) {
         SuccessSnackbar(textMsg: 'Profile created successfully')
             .show(Get.context as BuildContext);

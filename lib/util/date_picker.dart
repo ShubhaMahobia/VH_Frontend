@@ -42,14 +42,20 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         height: 50,
         width: 320,
         decoration: FormInputField.formTextFieldContainer(context),
-        child: Text(
-          selectedDate.isNotEmpty ? selectedDate : 'Enter your Date of Birth',
+          child: selectedDate.isNotEmpty
+              ? Text(
+                  selectedDate,
           style: GoogleFonts.plusJakartaSans(
             fontSize: 14,
             fontWeight: FontWeight.bold,
           ),
-        ),
-      ),
+                )
+              : Text(
+                  'Enter your Date of Birth',
+                  style: GoogleFonts.plusJakartaSans(
+                      color: Colors.grey, fontWeight: FontWeight.w400),
+                ),
+        )
     );
   }
 }

@@ -34,6 +34,7 @@ class _CreateProfilePatientState extends State<CreateProfilePatient> {
     _authenticationController.dobController.dispose();
     _authenticationController.emailController.dispose();
     _authenticationController.identificationNumberController.dispose();
+    _authenticationController.genderController.dispose();
     super.dispose();
   }
 
