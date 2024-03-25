@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
+import 'package:virtual_hospital/doctor/authentication/login_screen.dart';
 import 'package:virtual_hospital/firebase_options.dart';
+import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:virtual_hospital/patient/home_page.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,13 +15,42 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
+  configLoading();
 }
 
 
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.cubeGrid
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.yellow
+    ..backgroundColor = Colors.green
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = true
+    ..dismissOnTap = false;
+}
 
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  User? user;
+
+  @override
+  void initState() {
+    user = FirebaseAuth.instance.currentUser;
+    super.initState();
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -26,7 +60,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SignUpScreenPatient(),
+      home: user == null ? const LoginScreen() : const PatientHomePage(),
+      builder: EasyLoading.init(),
     );
   }
 }

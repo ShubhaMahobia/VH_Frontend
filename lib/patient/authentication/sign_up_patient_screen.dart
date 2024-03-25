@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:virtual_hospital/doctor/authentication/login_screen.dart';
+
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
-import 'package:virtual_hospital/patient/authentication/create_profile.dart';
+import 'package:virtual_hospital/doctor/authentication/login_screen.dart';
 
 class SignUpScreenPatient extends StatefulWidget {
   const SignUpScreenPatient({super.key});
@@ -85,7 +85,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => CreateProfilePatient());
+                  _authenticationController.signUp();
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.0625,
