@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:virtual_hospital/patient/home_page.dart';
+import 'package:virtual_hospital/patient/profile_page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -36,9 +37,7 @@ class NavigationController extends GetxController {
     Container(
       color: Colors.yellow,
     ),
-    Container(
-      color: Colors.blue,
-    ),
+    ProfilePage(),
     Container(
       color: Colors.pink,
     ),
