@@ -71,7 +71,10 @@ class AuthenticationController extends GetxController {
       User? user =
           await _authService.signInWithEmailAndPassword(email, password);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('userId', user?.uid as String);
+      prefs.setString(
+        'userId',
+        user?.uid as String,
+      );
       EasyLoading.dismiss();
       SuccessSnackbar(textMsg: 'Login successful')
           .show(Get.context as BuildContext);
@@ -123,7 +126,7 @@ class AuthenticationController extends GetxController {
       });
       http.Response res = await http.post(
         Uri.parse(
-            'https://nirogbharatbackend.azurewebsites.net/api/registerPatient'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+            'http://192.168.1.4:8080/api/registerPatient'), // Replace YOUR_SERVER_ADDRESS with the correct server address
         headers: {'Content-Type': 'application/json'},
         body: body,
       );
