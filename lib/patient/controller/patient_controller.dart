@@ -9,6 +9,7 @@ import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 class PatientController extends GetxController {
   var user = {};
   RxBool isLoading = true.obs;
+  RxBool isEditing = false.obs;
 //Function to fetch user details which will take email as body
   Future<void> fetchUserDetails() async {
     //API call to fetch user details
@@ -21,7 +22,7 @@ class PatientController extends GetxController {
 
       http.Response res = await http.post(
         Uri.parse(
-            'http://192.168.1.4:8080/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+            'http://192.168.87.120:8080/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
         headers: {'Content-Type': 'application/json'},
         body: body,
       );
@@ -31,10 +32,11 @@ class PatientController extends GetxController {
         //If user details are fetched successfully
         user = jsonData['data'];
         isLoading.value = false;
-
         update();
       } else {
-        //If user details are not fetched successfully
+        ErrorSnackBar(
+          textMsg: 'Internal Server Error',
+        ).show(Get.context as BuildContext);
         print(jsonData['message']);
       }
     } catch (e) {

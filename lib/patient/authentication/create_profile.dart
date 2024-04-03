@@ -174,11 +174,9 @@ class _CreateProfilePatientState extends State<CreateProfilePatient> {
               ),
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: GestureDetector(
-                  onTap: () {
-                    _authenticationController.createProfilePatient();
-                  },
-                  child: ButtonOne(buttonText: 'Create Account'),
+                child: ButtonOne(
+                  buttonText: 'Create Account',
+                  onTap: () {},
                 ),
               ),
             ],
