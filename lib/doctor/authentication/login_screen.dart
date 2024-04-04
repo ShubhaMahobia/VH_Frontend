@@ -86,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    FocusScope.of(context).unfocus();
                     _authenticationController.signIn();
                   },
                   child: Container(
