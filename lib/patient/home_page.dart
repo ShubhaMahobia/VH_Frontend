@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:virtual_hospital/patient/blog_post.dart';
 
 
 class PatientHomePage extends StatelessWidget {
@@ -84,12 +86,40 @@ class PatientHomePage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.redAccent,
-                          borderRadius: BorderRadius.circular(10)),
-                      height: 140,
-                      width: MediaQuery.of(context).size.width * 0.42,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => BlogPostPage(),
+                            transition: Transition.noTransition);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(10)),
+                        height: 140,
+                        width: MediaQuery.of(context).size.width * 0.42,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Stay Updated!!',
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                Text(
+                                  'Read the latest blog post',
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 14, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   Padding(
@@ -100,6 +130,28 @@ class PatientHomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10)),
                       height: 140,
                       width: MediaQuery.of(context).size.width * 0.42,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Connect with Doctor!!',
+                                style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              Text(
+                                'Book an appointment now!!',
+                                style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 14, color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
