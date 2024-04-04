@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
@@ -35,6 +36,7 @@ class _CreateProfilePatientState extends State<CreateProfilePatient> {
     _authenticationController.emailController.dispose();
     _authenticationController.identificationNumberController.dispose();
     _authenticationController.genderController.dispose();
+    EasyLoading.dismiss();
     super.dispose();
   }
 
@@ -176,7 +178,9 @@ class _CreateProfilePatientState extends State<CreateProfilePatient> {
                 padding: const EdgeInsets.all(16),
                 child: ButtonOne(
                   buttonText: 'Create Account',
-                  onTap: () {},
+                  onTap: () {
+                    _authenticationController.createProfilePatient();
+                  },
                 ),
               ),
             ],

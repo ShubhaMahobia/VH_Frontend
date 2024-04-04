@@ -22,7 +22,7 @@ class PatientController extends GetxController {
 
       http.Response res = await http.post(
         Uri.parse(
-            'http://192.168.87.120:8080/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+            'http://192.168.1.4:8080/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
         headers: {'Content-Type': 'application/json'},
         body: body,
       );

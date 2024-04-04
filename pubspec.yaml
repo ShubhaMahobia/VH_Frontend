@@ -45,6 +45,7 @@ dependencies:
   intl: ^0.18.1
   flutter_easyloading: ^3.0.5
   google_nav_bar: ^5.0.6
+  flutter_map: ^6.1.0
   
 
 dev_dependencies:
