@@ -1,9 +1,9 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 
 class PatientController extends GetxController {
@@ -14,15 +14,14 @@ class PatientController extends GetxController {
   Future<void> fetchUserDetails() async {
     //API call to fetch user details
     try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? userId = prefs.getString('userId');
+      String email = FirebaseAuth.instance.currentUser!.email!;
       String body = jsonEncode({
-        "id": userId,
+        "email": email,
       });
 
       http.Response res = await http.post(
         Uri.parse(
-            'http://192.168.87.120:8080/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+            'http://192.168.1.4:8080/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
         headers: {'Content-Type': 'application/json'},
         body: body,
       );

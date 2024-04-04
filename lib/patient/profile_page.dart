@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 import 'package:virtual_hospital/common/components/buttons/b1.dart';
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
 import 'package:virtual_hospital/patient/controller/patient_controller.dart';
@@ -21,6 +22,10 @@ class _ProfilePageState extends State<ProfilePage> {
     patientController.fetchUserDetails();
     super.initState();
   }
+
+  final AuthenticationController _authenticationController =
+      Get.put(AuthenticationController());
+
 
 
   @override
@@ -164,8 +169,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ButtonOne(
-                                  buttonText: 'Add Address',
-                                  onTap: () {},
+                                  buttonText: 'Sign Out',
+                                  onTap: () {
+                                    _authenticationController.signOut();
+                                  },
                                 ),
                               ),
                               Padding(
