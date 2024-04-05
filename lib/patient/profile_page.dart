@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
@@ -9,6 +9,8 @@ import 'package:virtual_hospital/common/components/textfields/input_decoration.d
 import 'package:virtual_hospital/patient/controller/patient_controller.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }

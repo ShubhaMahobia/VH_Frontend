@@ -27,7 +27,7 @@ class PatientController extends GetxController {
       );
 
       var jsonData = json.decode(res.body);
-      print(jsonData);
+     
       if (jsonData['success']) {
         //If user details are fetched successfully
         user = jsonData['data'];
@@ -37,10 +37,10 @@ class PatientController extends GetxController {
         ErrorSnackBar(
           textMsg: 'Internal Server Error',
         ).show(Get.context as BuildContext);
-        print(jsonData['message']);
+        
       }
     } catch (e) {
-      print(e.toString());
+    
       ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }

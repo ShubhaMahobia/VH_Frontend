@@ -37,7 +37,7 @@ class NavigationController extends GetxController {
     Container(
       color: Colors.yellow,
     ),
-    ProfilePage(),
+    const ProfilePage(),
     Container(
       color: Colors.pink,
     ),

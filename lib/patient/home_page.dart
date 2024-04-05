@@ -106,7 +106,7 @@ class PatientHomePage extends StatelessWidget {
                                 Text(
                                   'Stay Updated!!',
                                   style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ),
