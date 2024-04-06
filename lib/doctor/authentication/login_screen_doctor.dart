@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:virtual_hospital/doctor/authentication/sign_up_screen.dart';
+import 'package:virtual_hospital/patient/authentication/login_screen.dart';
 import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginScreenDoctor extends StatefulWidget {
+  const LoginScreenDoctor({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginScreenDoctor> createState() => _LoginScreenDoctorState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenDoctorState extends State<LoginScreenDoctor> {
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
 
@@ -37,18 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Welcome Back',
-                  style: GoogleFonts.plusJakartaSans(
-                      fontSize: 18, fontWeight: FontWeight.normal),
-                ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.8,
                   child: Text(
-                    'Sign in for the Best Experience',
+                    'Welcome, Doctor. Your expertise is awaited. Please proceed',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.plusJakartaSans(
-                        fontSize: 28, fontWeight: FontWeight.bold),
+                        fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(
@@ -126,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => const SignUpScreenPatient(),
+                    Get.to(() => const SignUpScreenDoctor(),
                         transition: Transition.noTransition);
                   },
                   child: Container(
@@ -145,6 +143,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Sign in as Patient? ",
+                      style: GoogleFonts.plusJakartaSans(
+                          fontSize: 14, fontWeight: FontWeight.w400),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => const LoginScreen(),
+                            transition: Transition.noTransition);
+                      },
+                      child: Text(
+                        " Login",
+                        style: GoogleFonts.plusJakartaSans(
+                            fontSize: 14, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

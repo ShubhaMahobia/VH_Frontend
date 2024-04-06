@@ -4,17 +4,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
-import 'package:virtual_hospital/doctor/authentication/sign_up_screen.dart';
+import 'package:virtual_hospital/doctor/authentication/login_screen_doctor.dart';
 import 'package:virtual_hospital/patient/authentication/login_screen.dart';
+import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
 
-class SignUpScreenPatient extends StatefulWidget {
-  const SignUpScreenPatient({super.key});
+class SignUpScreenDoctor extends StatefulWidget {
+  const SignUpScreenDoctor({super.key});
 
   @override
-  State<SignUpScreenPatient> createState() => _SignUpScreenPatientState();
+  State<SignUpScreenDoctor> createState() => _SignUpScreenDoctorState();
 }
 
-class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
+class _SignUpScreenDoctorState extends State<SignUpScreenDoctor> {
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
 
@@ -47,7 +48,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: Text(
-                    'Sign up for the Best Experience',
+                    'Joining as a Doctor? Sign up here',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 28, fontWeight: FontWeight.bold),
@@ -127,7 +128,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => const LoginScreen(),
+                    Get.to(() => const LoginScreenDoctor(),
                         transition: Transition.noTransition);
                   },
                   child: Container(
@@ -154,14 +155,13 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Join as Doctor ",
+                      "Sign Up as a Patient?",
                       style: GoogleFonts.plusJakartaSans(
                           fontSize: 14, fontWeight: FontWeight.w400),
                     ),
                     GestureDetector(
                       onTap: () {
-                        print("onw");
-                        Get.to(() => const SignUpScreenDoctor(),
+                        Get.to(() => const SignUpScreenPatient(),
                             transition: Transition.noTransition);
                       },
                       child: Text(

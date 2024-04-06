@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:virtual_hospital/doctor/authentication/login_screen.dart';
+import 'package:virtual_hospital/patient/authentication/login_screen.dart';
 import 'package:virtual_hospital/patient/authentication/create_profile.dart';
 import 'package:virtual_hospital/services/firebase_auth_services.dart';
 import 'package:http/http.dart' as http;
