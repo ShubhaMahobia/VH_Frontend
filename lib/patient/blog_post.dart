@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class BlogPostPage extends StatelessWidget {
   final List<String> urls = [
-    'https://artofhealthyliving.com/quick-tips-for-choosing-the-right-doctor-a-comprehensive-guide-to-finding-quality-healthcare-near-you/',
+    'https://medium.com/wise-well/the-brain-science-behind-aging-and-forgetting-1954c5c094ab',
     'https://medium.com/@ryanholiday/you-need-this-practice-in-your-life-fc30cfe1bb21',
     'https://medium.com/@pinkey23/the-importance-of-mental-health-in-the-workplace-288d89cc1291',
     'https://elemental.medium.com/how-soft-fascination-helps-restore-your-tired-brain-27669cd0be9d',
@@ -14,26 +14,46 @@ class BlogPostPage extends StatelessWidget {
     // Add more URLs as needed
   ];
   final List<String> blogTitle = [
-    'Quick tips for choosing the right doctor...',
+    'The Brain Science Behind Aging and Forgetting...',
     'You Need This Practice In Your Life...',
     'The Importance of Mental Health in the Workplace...',
     'How Soft Fascination Helps Restore Your Tired Brain...',
-    '6 Science-Backed Health Stories on COVID, Sleep, and More...',
     'Make Sleep a Priority...',
     'The Role of Vitamin C...',
+    'Beginner Ironman Training: A Minimalist Approach | Nutrition for Training',
     // Add more titles as needed
     // Add more URLs as needed
   ];
   final List<String> imageLinks = [
-    'https://artofhealthyliving.com/wp-content/uploads/2024/04/Quick-Tips-For-Choosing-The-Right-Doctor-A-Comprehensive-Guide-To-Finding-Quality-Healthcare-Near-You.jpg',
+    'https://miro.medium.com/v2/resize:fit:1100/format:webp/1*TYNsHKGvELRsgalw4UwIdg.png',
     'https://miro.medium.com/v2/resize:fit:828/format:webp/1*w61xFQGpNIskzh0eerzg2w.jpeg',
     'https://miro.medium.com/v2/resize:fit:828/format:webp/1*a3rQzrAcrByUEc-7L-4avg.jpeg',
-    'https://miro.medium.com/v2/resize:fit:828/format:webp/0*w2HyM6O58GADbmVt.jpg',
+    'https://miro.medium.com/v2/resize:fit:828/format:webp/0*w2HyM6O58GADbmVt',
     'https://miro.medium.com/v2/resize:fit:828/format:webp/1*intQ8N7ar0VZFhvXzSbNrw.png',
     'https://miro.medium.com/v2/resize:fit:828/format:webp/1*HbPhhMZ_uzZ62Bo2jxZlKQ.png',
     'https://miro.medium.com/v2/resize:fit:828/format:webp/0*nlwReEu55uUpGqad',
     // Add more titles as needed
     // Add more URLs as needed
+  ];
+
+  final List<String> dateOfBlog = [
+    '2 Months ago',
+    '1 Month ago',
+    '3 Months ago',
+    '4 Months ago',
+    'Recently posted',
+    'Recently posted',
+    '1 Year ago'
+  ];
+
+  final List<String> author = [
+    'Kathleen Murphy',
+    'Ryan Holiday',
+    'Pinkey',
+    'Markham Heid',
+    'The Swimmist',
+    'The Swimmist',
+    'Katie Johnson',
   ];
 
   BlogPostPage({super.key});
@@ -113,7 +133,7 @@ class BlogPostPage extends StatelessWidget {
                               // ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
@@ -124,7 +144,7 @@ class BlogPostPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           Padding(
@@ -133,19 +153,18 @@ class BlogPostPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Archi Kirar',
+                                  author[index],
                                   style:
                                       GoogleFonts.plusJakartaSans(fontSize: 12),
                                 ),
                                 Text(
-                                  'Date - 30/11/2003',
+                                  dateOfBlog[index],
                                   style:
                                       GoogleFonts.plusJakartaSans(fontSize: 12),
                                 )
                               ],
                             ),
                           )
-                          
                         ],
                       ),
                     ),
