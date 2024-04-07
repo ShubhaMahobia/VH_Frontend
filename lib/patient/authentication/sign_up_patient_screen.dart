@@ -160,7 +160,7 @@ class _SignUpScreenPatientState extends State<SignUpScreenPatient> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        print("onw");
+                        
                         Get.to(() => const SignUpScreenDoctor(),
                             transition: Transition.noTransition);
                       },

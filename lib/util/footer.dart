@@ -39,6 +39,6 @@ class NavigationController extends GetxController {
       color: Colors.yellow,
     ),
     const ProfilePage(),
-    CreateProfileDoctor()
+    const CreateProfileDoctor()
   ];
 }

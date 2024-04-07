@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/doctor/authentication/sign_up_screen.dart';
 import 'package:virtual_hospital/patient/authentication/login_screen.dart';
-import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
+
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 

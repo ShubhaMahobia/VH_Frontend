@@ -41,7 +41,7 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
   void saveProfile() async {
     _doctorController.imageLinkController.text =
         await Util().saveData(file: image!);
-    print(_doctorController.imageLinkController.text);
+    
   }
 
   final DoctorController _doctorController = Get.put(DoctorController());

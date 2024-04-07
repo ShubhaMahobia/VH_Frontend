@@ -95,7 +95,6 @@ class DoctorController extends GetxController {
       // Add more days as needed
     ];
     //Get the values from the text editing controllers
-    String email = emailController.text;
     String firstName = firstNameController.text;
     String lastName = lastNameController.text;
     String phoneNumber = phoneNumberController.text;
@@ -141,10 +140,10 @@ class DoctorController extends GetxController {
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
-        print(body);
+     
 
         var jsonData = json.decode(res.body);
-        print(jsonData);
+  
         if (jsonData['success']) {
           EasyLoading.dismiss();
           SuccessSnackbar(
@@ -158,7 +157,7 @@ class DoctorController extends GetxController {
         }
       } catch (e) {
         EasyLoading.dismiss();
-        print(e);
+        
         ErrorSnackBar(
           textMsg: 'Something Went Wrong',
         ).show(Get.context as BuildContext);

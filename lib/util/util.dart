@@ -11,9 +11,9 @@ import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 
 pickImage(ImageSource source) async {
   final ImagePicker imagePicker = ImagePicker();
-  XFile? _file = await imagePicker.pickImage(source: source);
-  if (_file != null) {
-    return await _file.readAsBytes();
+  XFile? file = await imagePicker.pickImage(source: source);
+  if (file != null) {
+    return await file.readAsBytes();
   } else {
     ErrorSnackBar(
       textMsg: 'No Image Selected',
