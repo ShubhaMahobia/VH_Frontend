@@ -47,6 +47,9 @@ dependencies:
   google_nav_bar: ^5.0.6
   flutter_map: ^6.1.0
   url_launcher: ^6.0.12
+  image_picker: ^1.0.7
+  firebase_storage: ^11.7.0
+  cloud_firestore: ^4.16.0
   
 
 dev_dependencies:

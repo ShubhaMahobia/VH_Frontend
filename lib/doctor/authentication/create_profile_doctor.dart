@@ -3,12 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:virtual_hospital/common/components/buttons/b1.dart';
 import 'package:virtual_hospital/common/components/dropdowns/custom_dropdown.dart';
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
 import 'package:virtual_hospital/doctor/controllers/doctor_controller.dart';
 import 'package:virtual_hospital/util/date_picker.dart';
+import 'package:virtual_hospital/util/util.dart';
 
 class CreateProfileDoctor extends StatefulWidget {
   const CreateProfileDoctor({super.key});
@@ -18,6 +19,7 @@ class CreateProfileDoctor extends StatefulWidget {
 }
 
 class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
+  Uint8List? image;
   @override
   void initState() {
     super.initState();
@@ -27,6 +29,19 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
   void dispose() {
     EasyLoading.dismiss();
     super.dispose();
+  }
+
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      image = img;
+    });
+  }
+
+  void saveProfile() async {
+    _doctorController.imageLinkController.text =
+        await Util().saveData(file: image!);
+    print(_doctorController.imageLinkController.text);
   }
 
   final DoctorController _doctorController = Get.put(DoctorController());
@@ -46,6 +61,33 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                 style: GoogleFonts.plusJakartaSans(
                     fontSize: 24, fontWeight: FontWeight.w600),
               ),
+              const SizedBox(
+                height: 24,
+              ),
+              //Create a profile picture upload
+              //This will be a circle avatar
+              image != null
+                  ? GestureDetector(
+                      onTap: () {
+                        selectImage();
+                      },
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage: MemoryImage(image!),
+                      ),
+                    )
+                  : CircleAvatar(
+                      radius: 50,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.camera_alt,
+                          size: 32,
+                        ),
+                        onPressed: () {
+                          selectImage();
+                        },
+                      ),
+                    ),
               const SizedBox(
                 height: 24,
               ),
@@ -138,9 +180,7 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                   width: 320,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
-                    inputFormatters: [LengthLimitingTextInputFormatter(12)],
                     controller: _doctorController.specificationController,
-                    keyboardType: TextInputType.number,
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 14, fontWeight: FontWeight.bold),
                     decoration: FormInputField.textFieldInputDecoration(
@@ -156,9 +196,9 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                   width: 320,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
-                    inputFormatters: [LengthLimitingTextInputFormatter(12)],
+                    
                     //   controller: _doctorController.phoneNumberController,
-                    keyboardType: TextInputType.number,
+                    
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 14, fontWeight: FontWeight.bold),
                     decoration: FormInputField.textFieldInputDecoration(
@@ -174,9 +214,9 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                   width: 320,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
-                    inputFormatters: [LengthLimitingTextInputFormatter(12)],
+                    
                     controller: _doctorController.qualificationController,
-                    keyboardType: TextInputType.number,
+                    
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 14, fontWeight: FontWeight.bold),
                     decoration: FormInputField.textFieldInputDecoration(
@@ -192,13 +232,31 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                   width: 320,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
-                    inputFormatters: [LengthLimitingTextInputFormatter(12)],
+                    
                     controller: _doctorController.clinicAddressController,
-                    keyboardType: TextInputType.number,
+                   
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 14, fontWeight: FontWeight.bold),
                     decoration: FormInputField.textFieldInputDecoration(
                         context, 'Clinic Address*'),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  height: 50,
+                  width: 320,
+                  decoration: FormInputField.formTextFieldContainer(context),
+                  child: TextField(
+                    inputFormatters: [LengthLimitingTextInputFormatter(10)],
+                    controller: _doctorController.phoneNumberController,
+                    keyboardType: TextInputType.number,
+                    style: GoogleFonts.plusJakartaSans(
+                        fontSize: 14, fontWeight: FontWeight.bold),
+                    decoration: FormInputField.textFieldInputDecoration(
+                        context, 'Phone Number*'),
                   ),
                 ),
               ),
@@ -216,7 +274,7 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 14, fontWeight: FontWeight.bold),
                     decoration: FormInputField.textFieldInputDecoration(
-                        context, 'Phone Number*'),
+                        context, 'Aadhar Card Number*'),
                   ),
                 ),
               ),
@@ -236,6 +294,7 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                 child: ButtonOne(
                   buttonText: 'Create Account',
                   onTap: () {
+                    saveProfile();
                     _doctorController.createDoctorProfile();
                   },
                 ),

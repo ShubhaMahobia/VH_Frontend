@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
-import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 import 'package:virtual_hospital/doctor/authentication/login_screen_doctor.dart';
-import 'package:virtual_hospital/patient/authentication/login_screen.dart';
+import 'package:virtual_hospital/doctor/controllers/doctor_controller.dart';
+
 import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
 
 class SignUpScreenDoctor extends StatefulWidget {
@@ -16,13 +15,12 @@ class SignUpScreenDoctor extends StatefulWidget {
 }
 
 class _SignUpScreenDoctorState extends State<SignUpScreenDoctor> {
-  final AuthenticationController _authenticationController =
-      Get.put(AuthenticationController());
+  final DoctorController _doctorController = Get.put(DoctorController());
 
   @override
   void dispose() {
-    _authenticationController.emailController.dispose();
-    _authenticationController.passwordController.dispose();
+    _doctorController.emailController.dispose();
+    _doctorController.passwordController.dispose();
     super.dispose();
   }
 
@@ -62,7 +60,7 @@ class _SignUpScreenDoctorState extends State<SignUpScreenDoctor> {
                   height: 50,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
-                      controller: _authenticationController.emailController,
+                      controller: _doctorController.emailController,
                       style: GoogleFonts.plusJakartaSans(
                           color: Colors.black, fontWeight: FontWeight.w400),
                       decoration: FormInputField.textFieldInputDecoration(
@@ -76,7 +74,7 @@ class _SignUpScreenDoctorState extends State<SignUpScreenDoctor> {
                   height: 50,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
-                    controller: _authenticationController.passwordController,
+                    controller: _doctorController.passwordController,
                     style: GoogleFonts.plusJakartaSans(
                         color: Colors.black, fontWeight: FontWeight.w400),
                     obscureText: true,
@@ -89,7 +87,8 @@ class _SignUpScreenDoctorState extends State<SignUpScreenDoctor> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    _authenticationController.signUp();
+                    FocusScope.of(context).unfocus();
+                    _doctorController.signUpDoctor();
                   },
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.0625,
