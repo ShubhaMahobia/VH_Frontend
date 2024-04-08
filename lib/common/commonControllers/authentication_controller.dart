@@ -14,6 +14,7 @@ import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 import 'package:virtual_hospital/util/snackbar/success_snackbar.dart';
 
 class AuthenticationController extends GetxController {
+  RxBool isPatient = true.obs;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();

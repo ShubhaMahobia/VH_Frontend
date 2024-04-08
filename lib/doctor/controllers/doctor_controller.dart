@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
@@ -58,13 +57,14 @@ class DoctorController extends GetxController {
       SuccessSnackbar(textMsg: 'Account created successfully')
           .show(Get.context as BuildContext);
       await Future.delayed(const Duration(seconds: 1))
-          .then((value) => Get.to(() => CreateProfileDoctor()));
+          .then((value) => Get.to(() => const CreateProfileDoctor()));
     } catch (e) {
       EasyLoading.dismiss();
     }
   }
 
   void signInDoctor() async {
+    _authenticationController.isPatient.value = false;
     String email = emailController.text;
     String password = passwordController.text;
     try {
@@ -90,13 +90,14 @@ class DoctorController extends GetxController {
       SuccessSnackbar(textMsg: 'Login successful')
           .show(Get.context as BuildContext);
       await Future.delayed(const Duration(seconds: 1))
-          .then((value) => Get.to(() => ProfilePageDoctor()));
+          .then((value) => Get.to(() => const ProfilePageDoctor()));
     } catch (e) {
       EasyLoading.dismiss();
     }
   }
 
   void createDoctorProfile() async {
+    
     List<Map<String, String>> availability = [
       {"day": "Monday", "time": "9am - 5pm"},
       {"day": "Tuesday", "time": "9am - 5pm"},
@@ -175,12 +176,13 @@ class DoctorController extends GetxController {
 
         var jsonData = json.decode(res.body);
         if (jsonData['success']) {
+          _authenticationController.isPatient.value = false;
           EasyLoading.dismiss();
           SuccessSnackbar(
             textMsg: 'Profile Created Successfully',
           ).show(Get.context as BuildContext);
           await Future.delayed(const Duration(seconds: 1))
-              .then((value) => Get.to(() => ProfilePageDoctor()));
+              .then((value) => Get.to(() => const ProfilePageDoctor()));
         } else {
           EasyLoading.dismiss();
           ErrorSnackBar(
@@ -202,7 +204,6 @@ class DoctorController extends GetxController {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       String? userId = prefs.getString('userId');
-      String email = FirebaseAuth.instance.currentUser!.email!;
       String body = jsonEncode({
         "id": userId,
       });
@@ -214,7 +215,6 @@ class DoctorController extends GetxController {
         body: body,
       );
       var jsonData = json.decode(res.body);
-      print(jsonData);
       if (jsonData['success']) {
         //If user details are fetched successfully
         doctor = jsonData['data'];

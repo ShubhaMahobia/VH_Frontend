@@ -20,7 +20,7 @@ class BlogPostPage extends StatelessWidget {
     'How Soft Fascination Helps Restore Your Tired Brain...',
     'Make Sleep a Priority...',
     'The Role of Vitamin C...',
-    'Beginner Ironman Training: A Minimalist Approach | Nutrition for Training',
+    'Beginner Ironman Training: A Minimalist Approach...',
     // Add more titles as needed
     // Add more URLs as needed
   ];

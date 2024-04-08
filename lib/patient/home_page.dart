@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:virtual_hospital/common/videoChat/video_chat_button.dart';
 import 'package:virtual_hospital/patient/blog_post.dart';
+import 'package:virtual_hospital/patient/controller/patient_controller.dart';
+import 'package:virtual_hospital/patient/profile_page.dart';
 
 
-class PatientHomePage extends StatelessWidget {
+class PatientHomePage extends StatefulWidget {
   const PatientHomePage({super.key});
 
+  @override
+  State<PatientHomePage> createState() => _PatientHomePageState();
+}
+
+class _PatientHomePageState extends State<PatientHomePage> {
+  PatientController patientController = Get.put(PatientController());
+  @override
+  void initState() {
+    patientController.fetchUserDetails();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +56,18 @@ class PatientHomePage extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(
+              width: 100,
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const ProfilePage(),
+                    transition: Transition.noTransition);
+              },
+              child: CircleAvatar(
+                radius: 15,
+              ),
+            )
           ],
         ),
       ),
@@ -158,12 +185,27 @@ class PatientHomePage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blueAccent,
-                      borderRadius: BorderRadius.circular(10)),
-                  height: 100,
-                  width: MediaQuery.of(context).size.width * 0.9,
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => const DummyScreen(),
+                        transition: Transition.noTransition);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(10)),
+                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Center(
+                      child: Text(
+                        'Connect with Doctor!!',
+                        style: GoogleFonts.plusJakartaSans(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Padding(
