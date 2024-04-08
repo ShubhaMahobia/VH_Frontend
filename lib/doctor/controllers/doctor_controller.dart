@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 import 'package:virtual_hospital/doctor/authentication/create_profile_doctor.dart';
+import 'package:virtual_hospital/doctor/doctor_homepage.dart';
 import 'package:virtual_hospital/services/firebase_auth_services.dart';
 import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +26,14 @@ class DoctorController extends GetxController {
   TextEditingController clinicAddressController = TextEditingController();
   TextEditingController imageLinkController = TextEditingController();
   TextEditingController genderController = TextEditingController();
+  TextEditingController identificationNumberController =
+      TextEditingController();
   final FirebaseAuthService _authService = FirebaseAuthService();
+  final AuthenticationController _authenticationController =
+      Get.put(AuthenticationController());
+
+  var doctor = {};
+  RxBool isLoading = true.obs;
 
   void signUpDoctor() async {
     try {
@@ -47,8 +57,8 @@ class DoctorController extends GetxController {
       EasyLoading.dismiss();
       SuccessSnackbar(textMsg: 'Account created successfully')
           .show(Get.context as BuildContext);
-      await Future.delayed(const Duration(seconds: 2))
-          .then((value) => Get.to(() => const CreateProfileDoctor()));
+      await Future.delayed(const Duration(seconds: 1))
+          .then((value) => Get.to(() => CreateProfileDoctor()));
     } catch (e) {
       EasyLoading.dismiss();
     }
@@ -80,9 +90,7 @@ class DoctorController extends GetxController {
       SuccessSnackbar(textMsg: 'Login successful')
           .show(Get.context as BuildContext);
       await Future.delayed(const Duration(seconds: 1))
-          .then((value) => Get.to(() => Container(
-                color: Colors.red,
-              )));
+          .then((value) => Get.to(() => ProfilePageDoctor()));
     } catch (e) {
       EasyLoading.dismiss();
     }
@@ -104,15 +112,39 @@ class DoctorController extends GetxController {
     String clinicAddress = clinicAddressController.text;
 
     //Check if the fields are empty
-    if (firstName.isEmpty ||
-        lastName.isEmpty ||
-        phoneNumber.isEmpty ||
-        specification.isEmpty ||
-        experience.isEmpty ||
-        qualification.isEmpty ||
-        clinicAddress.isEmpty) {
-      ErrorSnackBar(textMsg: 'All fields are required')
+    if (emailController.text.isEmpty) {
+      ErrorSnackBar(textMsg: 'Email is required')
           .show(Get.context as BuildContext);
+      return;
+    }
+    if (firstName.isEmpty) {
+      ErrorSnackBar(textMsg: 'First Name is required')
+          .show(Get.context as BuildContext);
+      return;
+    } else if (lastName.isEmpty) {
+      ErrorSnackBar(textMsg: 'Last Name is required')
+          .show(Get.context as BuildContext);
+      return;
+    } else if (phoneNumber.isEmpty) {
+      ErrorSnackBar(textMsg: 'Phone Number is required')
+          .show(Get.context as BuildContext);
+      return;
+    } else if (specification.isEmpty) {
+      ErrorSnackBar(textMsg: 'Specialization is required')
+          .show(Get.context as BuildContext);
+      return;
+    } else if (experience.isEmpty) {
+      ErrorSnackBar(textMsg: 'Experience is required')
+          .show(Get.context as BuildContext);
+      return;
+    } else if (qualification.isEmpty) {
+      ErrorSnackBar(textMsg: 'Qualification is required')
+          .show(Get.context as BuildContext);
+      return;
+    } else if (clinicAddress.isEmpty) {
+      ErrorSnackBar(textMsg: 'Clinic Address is required')
+          .show(Get.context as BuildContext);
+      return;
     } else {
       try {
         EasyLoading.show(status: 'Loading...');
@@ -126,29 +158,29 @@ class DoctorController extends GetxController {
           "email": emailController.text,
           "phoneNumber": phoneNumberController.text,
           "experience": experienceController.text,
-          "gender": "male",
+          "gender": _authenticationController.genderController.text,
           "availability": availability,
           "profilePicture": imageLinkController.text,
           "address": clinicAddressController.text,
           "specializedField": specificationController.text,
           "degree": qualificationController.text,
-          "identificationNumber": "1234567805345390",
+          "identificationNumber": identificationNumberController.text,
         });
         http.Response res = await http.post(
           Uri.parse(
-              'http://192.168.29.161:8080/api/registerDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+              'http://192.168.136.120:8080/api/registerDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
-     
 
         var jsonData = json.decode(res.body);
-  
         if (jsonData['success']) {
           EasyLoading.dismiss();
           SuccessSnackbar(
             textMsg: 'Profile Created Successfully',
           ).show(Get.context as BuildContext);
+          await Future.delayed(const Duration(seconds: 1))
+              .then((value) => Get.to(() => ProfilePageDoctor()));
         } else {
           EasyLoading.dismiss();
           ErrorSnackBar(
@@ -157,11 +189,44 @@ class DoctorController extends GetxController {
         }
       } catch (e) {
         EasyLoading.dismiss();
-        
+
         ErrorSnackBar(
           textMsg: 'Something Went Wrong',
         ).show(Get.context as BuildContext);
       }
+    }
+  }
+
+  Future<void> fetchUserDetails() async {
+    //API call to fetch user details
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+      String email = FirebaseAuth.instance.currentUser!.email!;
+      String body = jsonEncode({
+        "id": userId,
+      });
+
+      http.Response res = await http.post(
+        Uri.parse(
+            'http://192.168.136.120:8080/api/getDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+      var jsonData = json.decode(res.body);
+      print(jsonData);
+      if (jsonData['success']) {
+        //If user details are fetched successfully
+        doctor = jsonData['data'];
+        isLoading.value = false;
+        update();
+      } else {
+        ErrorSnackBar(
+          textMsg: 'Internal Server Error',
+        ).show(Get.context as BuildContext);
+      }
+    } catch (e) {
+      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }
 }

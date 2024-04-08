@@ -14,10 +14,12 @@ class PatientController extends GetxController {
   Future<void> fetchUserDetails() async {
     //API call to fetch user details
     try {
+    
       String email = FirebaseAuth.instance.currentUser!.email!;
       String body = jsonEncode({
         "email": email,
       });
+      
 
       http.Response res = await http.post(
         Uri.parse(
@@ -27,6 +29,7 @@ class PatientController extends GetxController {
       );
 
       var jsonData = json.decode(res.body);
+
      
       if (jsonData['success']) {
         //If user details are fetched successfully
