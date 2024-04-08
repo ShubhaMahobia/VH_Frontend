@@ -52,6 +52,7 @@ dependencies:
   cloud_firestore: ^4.16.0
   zego_uikit_prebuilt_call: ^4.6.0
   wakelock_plus: ^1.2.2
+  uuid: ^4.3.3
   
 
 dev_dependencies:
