@@ -12,7 +12,8 @@ class DummyScreen extends StatelessWidget {
         child: ElevatedButton(
           child: const Text('Start Video Chat'),
           onPressed: () {
-            Get.to(() => const CallPage());
+            Get.to(() =>
+                const CallPage(callId: 'xyz', userName: 'Shubham Mahobia'));
           },
         ),
       ),
