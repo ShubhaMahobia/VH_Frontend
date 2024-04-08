@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 class CallPage extends StatelessWidget {
+  // ignore: use_super_parameters
   const CallPage({Key? key}) : super(key: key);
 
   @override

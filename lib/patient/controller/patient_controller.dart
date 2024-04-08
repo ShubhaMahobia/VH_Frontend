@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -20,18 +18,16 @@ class PatientController extends GetxController {
       String body = jsonEncode({
         "id": userId,
       });
-      
 
       http.Response res = await http.post(
         Uri.parse(
-            'https://nirogbharatbackend.azurewebsites.net/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+            'http://192.168.1.2:8080/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
         headers: {'Content-Type': 'application/json'},
         body: body,
       );
 
       var jsonData = json.decode(res.body);
 
-     
       if (jsonData['success']) {
         //If user details are fetched successfully
         user = jsonData['data'];
@@ -41,10 +37,8 @@ class PatientController extends GetxController {
         ErrorSnackBar(
           textMsg: 'Internal Server Error',
         ).show(Get.context as BuildContext);
-        
       }
     } catch (e) {
-    
       ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }

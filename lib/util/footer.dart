@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:virtual_hospital/common/Video_chat_button.dart';
-import 'package:virtual_hospital/common/video_chat.dart';
+import 'package:virtual_hospital/common/videoChat/video_chat_button.dart';
 import 'package:virtual_hospital/doctor/authentication/create_profile_doctor.dart';
 import 'package:virtual_hospital/patient/home_page.dart';
 import 'package:virtual_hospital/patient/profile_page.dart';
@@ -37,7 +36,7 @@ class NavigationController extends GetxController {
 
   final screens = [
     const PatientHomePage(),
-    DummyScreen(),
+    const DummyScreen(),
     const ProfilePage(),
     const CreateProfileDoctor()
   ];
