@@ -14,19 +14,23 @@ class PatientController extends GetxController {
   Future<void> fetchUserDetails() async {
     //API call to fetch user details
     try {
+    
       String email = FirebaseAuth.instance.currentUser!.email!;
       String body = jsonEncode({
         "email": email,
       });
+      
 
       http.Response res = await http.post(
         Uri.parse(
-            'http://192.168.1.4:8080/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+            'https://nirogbharatbackend.azurewebsites.net/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
         headers: {'Content-Type': 'application/json'},
         body: body,
       );
 
       var jsonData = json.decode(res.body);
+
+     
       if (jsonData['success']) {
         //If user details are fetched successfully
         user = jsonData['data'];
@@ -36,10 +40,10 @@ class PatientController extends GetxController {
         ErrorSnackBar(
           textMsg: 'Internal Server Error',
         ).show(Get.context as BuildContext);
-        print(jsonData['message']);
+        
       }
     } catch (e) {
-      print(e.toString());
+    
       ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }

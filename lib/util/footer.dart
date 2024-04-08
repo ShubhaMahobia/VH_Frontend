@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:virtual_hospital/doctor/authentication/create_profile_doctor.dart';
 import 'package:virtual_hospital/patient/home_page.dart';
 import 'package:virtual_hospital/patient/profile_page.dart';
 
@@ -37,9 +38,7 @@ class NavigationController extends GetxController {
     Container(
       color: Colors.yellow,
     ),
-    ProfilePage(),
-    Container(
-      color: Colors.pink,
-    ),
+    const ProfilePage(),
+    const CreateProfileDoctor()
   ];
 }

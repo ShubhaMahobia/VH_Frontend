@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:virtual_hospital/doctor/authentication/login_screen.dart';
+import 'package:virtual_hospital/doctor/doctor_homepage.dart';
+import 'package:virtual_hospital/patient/authentication/login_screen.dart';
 import 'package:virtual_hospital/firebase_options.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:virtual_hospital/util/footer.dart';
@@ -59,7 +60,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: user == null ? const LoginScreen() : const LandingPage(),
+      home: user == null ? const LoginScreen() : const ProfilePageDoctor(),
       builder: EasyLoading.init(),
     );
   }

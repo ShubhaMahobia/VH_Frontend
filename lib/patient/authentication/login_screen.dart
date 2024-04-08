@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:virtual_hospital/doctor/authentication/login_screen_doctor.dart';
 import 'package:virtual_hospital/patient/authentication/sign_up_patient_screen.dart';
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
@@ -43,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 18, fontWeight: FontWeight.normal),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.8,
                   child: Text(
                     'Sign in for the Best Experience',
                     textAlign: TextAlign.center,
@@ -145,6 +147,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Sign in as Doctor ",
+                      style: GoogleFonts.plusJakartaSans(
+                          fontSize: 14, fontWeight: FontWeight.w400),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => const LoginScreenDoctor(),
+                            transition: Transition.noTransition);
+                      },
+                      child: Text(
+                        " Login",
+                        style: GoogleFonts.plusJakartaSans(
+                            fontSize: 14, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
