@@ -65,6 +65,7 @@ class DoctorController extends GetxController {
   }
 
   void signInDoctor() async {
+    _authenticationController.isPatient.value = false;
     String email = emailController.text;
     String password = passwordController.text;
     try {
@@ -97,6 +98,7 @@ class DoctorController extends GetxController {
   }
 
   void createDoctorProfile() async {
+    
     List<Map<String, String>> availability = [
       {"day": "Monday", "time": "9am - 5pm"},
       {"day": "Tuesday", "time": "9am - 5pm"},
@@ -175,6 +177,7 @@ class DoctorController extends GetxController {
 
         var jsonData = json.decode(res.body);
         if (jsonData['success']) {
+          _authenticationController.isPatient.value = false;
           EasyLoading.dismiss();
           SuccessSnackbar(
             textMsg: 'Profile Created Successfully',
@@ -202,7 +205,6 @@ class DoctorController extends GetxController {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       String? userId = prefs.getString('userId');
-      String email = FirebaseAuth.instance.currentUser!.email!;
       String body = jsonEncode({
         "id": userId,
       });
@@ -214,7 +216,6 @@ class DoctorController extends GetxController {
         body: body,
       );
       var jsonData = json.decode(res.body);
-      print(jsonData);
       if (jsonData['success']) {
         //If user details are fetched successfully
         doctor = jsonData['data'];

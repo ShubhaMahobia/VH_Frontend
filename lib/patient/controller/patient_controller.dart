@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 
 class PatientController extends GetxController {
@@ -14,10 +15,10 @@ class PatientController extends GetxController {
   Future<void> fetchUserDetails() async {
     //API call to fetch user details
     try {
-    
-      String email = FirebaseAuth.instance.currentUser!.email!;
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
       String body = jsonEncode({
-        "email": email,
+        "id": userId,
       });
       
 

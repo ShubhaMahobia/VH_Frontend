@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_hospital/patient/authentication/login_screen.dart';
 import 'package:virtual_hospital/patient/authentication/create_profile.dart';
@@ -14,6 +15,7 @@ import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 import 'package:virtual_hospital/util/snackbar/success_snackbar.dart';
 
 class AuthenticationController extends GetxController {
+  RxBool isPatient = true.obs;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
