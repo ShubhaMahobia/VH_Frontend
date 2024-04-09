@@ -21,7 +21,7 @@ class PatientController extends GetxController {
 
       http.Response res = await http.post(
         Uri.parse(
-            'http://192.168.1.2:8080/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+            'https://nirogbharatbackend.azurewebsites.net/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
         headers: {'Content-Type': 'application/json'},
         body: body,
       );

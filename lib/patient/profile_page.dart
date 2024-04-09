@@ -59,13 +59,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   //Add circle of size 100 in center
                   child: const Center(
                     child: CircleAvatar(
-                      radius: 40,
+                      backgroundImage: NetworkImage(
+                          'https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg'),
+                      radius: 50,
                       backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.person,
-                        size: 50,
-                        color: Colors.blue,
-                      ),
+                     
                     ),
                   ),
                 ),

@@ -68,8 +68,8 @@ class _MyAppState extends State<MyApp> {
       home: user == null
           ? const LoginScreen()
           : _authenticationController.isPatient.value
-              ? const DoctorHomepage()
-              : const ProfilePageDoctor(),
+              ? const PatientHomePage()
+              : const DoctorHomepage(),
       builder: EasyLoading.init(),
     );
   }
