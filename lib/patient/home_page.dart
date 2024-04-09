@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/patient/blog_post.dart';
+import 'package:virtual_hospital/patient/bookAppointment/book_appointment_all_doctor.dart';
 import 'package:virtual_hospital/patient/controller/patient_controller.dart';
+import 'package:virtual_hospital/patient/nearby_hospital.dart';
 import 'package:virtual_hospital/patient/profile_page.dart';
 
 
@@ -19,6 +22,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
   void initState() {
     patientController.fetchUserDetails();
     patientController.fetchAllDoctors();
+    patientController.fetchAllHospital();
     super.initState();
   }
   @override
@@ -84,17 +88,27 @@ class _PatientHomePageState extends State<PatientHomePage> {
                         children: [
                           Column(
                             children: [
-                              Container(
-                                child: Icon(
-                                  Icons.book,
-                                  color: Colors.white,
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(() => BookAppointmentAllDoctor());
+                                  // Get.to(
+                                  //   () => CallPage(
+                                  //       userName: controller.user['firstName'],
+                                  //       callId: '1234'),
+                                  // );
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Colors.blue,
+                                  ),
+                                  height: 50,
+                                  width: 50,
+                                  child: const Icon(
+                                    Icons.book,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  color: Colors.blue,
-                                ),
-                                height: 50,
-                                width: 50,
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -144,19 +158,24 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           ),
                           Column(
                             children: [
-                              Container(
-                                child: Center(
-                                  child: Icon(
-                                    Icons.location_pin,
-                                    color: Colors.white,
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(() => const NearbyHospital());
+                                },
+                                child: Container(
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.location_pin,
+                                      color: Colors.white,
+                                    ),
                                   ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Colors.blue,
+                                  ),
+                                  height: 50,
+                                  width: 50,
                                 ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  color: Colors.blue,
-                                ),
-                                height: 50,
-                                width: 50,
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -203,7 +222,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                         child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemCount: patientController.allDoctors.length,
+                          itemCount: patientController.allDoctors.length - 5,
                           itemBuilder: (BuildContext context, int index) {
                             //Include Box shadow
                             return Container(
@@ -221,7 +240,8 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                       blurRadius:
                                           7, // Blur radius of the shadow
                                       offset:
-                                          Offset(0, 3), // Offset of the shadow
+                                         const Offset(
+                                          0, 3), // Offset of the shadow
                                     ),
                                   ],
                                   borderRadius: BorderRadius.circular(10),
@@ -234,7 +254,10 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                 children: [
                                   Row(
                                     children: [
-                                      const CircleAvatar(
+                                      CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                            patientController.allDoctors[index]
+                                                ['profilePicture']),
                                         radius: 18,
                                       ),
                                       Padding(
@@ -328,7 +351,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       child: Row(
                         children: [
                           Text(
-                            'Welcome Shubham',
+                            'Welcome ${patientController.user['firstName']}',
                             style: GoogleFonts.plusJakartaSans(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           )
@@ -358,7 +381,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                               color: Colors.blue,
                             ),
                             title: Text(
-                              'Read Latest Blog',
+                              'Healthy Learnings',
                               style: GoogleFonts.plusJakartaSans(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),

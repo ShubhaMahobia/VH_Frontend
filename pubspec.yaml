@@ -53,6 +53,7 @@ dependencies:
   zego_uikit_prebuilt_call: ^4.6.0
   wakelock_plus: ^1.2.2
   uuid: ^4.3.3
+  geolocator: ^11.0.0
   
 
 dev_dependencies:

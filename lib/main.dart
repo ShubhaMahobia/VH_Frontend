@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 import 'package:virtual_hospital/doctor/doctor_homepage.dart';
-import 'package:virtual_hospital/doctor/doctor_profile.dart';
 import 'package:virtual_hospital/patient/authentication/login_screen.dart';
 import 'package:virtual_hospital/firebase_options.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

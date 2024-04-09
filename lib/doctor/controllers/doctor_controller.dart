@@ -169,12 +169,13 @@ class DoctorController extends GetxController {
         });
         http.Response res = await http.post(
           Uri.parse(
-              'https://nirogbharatbackend.azurewebsites.net/api/registerDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+              'http://172.16.17.88:8080/api/registerDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
 
         var jsonData = json.decode(res.body);
+       
         if (jsonData['success']) {
           _authenticationController.isPatient.value = false;
           EasyLoading.dismiss();

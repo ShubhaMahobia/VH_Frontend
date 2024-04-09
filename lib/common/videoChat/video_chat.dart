@@ -24,7 +24,7 @@ class _CallPageState extends State<CallPage> {
           372572596, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
       appSign:
           '8619ece1f2a8b4c67a2350027375ea7eb0c56cd7738c073b3c490d50e1c9d492', // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
-      userID: '123456',
+      userID: patientController.user['_id'],
       userName: widget.userName,
       callID: widget.callId,
       // You can also use groupVideo/groupVoice/oneOnOneVoice to make more types of calls.
