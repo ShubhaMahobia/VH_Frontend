@@ -9,6 +9,7 @@ class PatientController extends GetxController {
   var user = {};
   RxBool isLoading = true.obs;
   RxBool isEditing = false.obs;
+  var allDoctors = [];
 //Function to fetch user details which will take email as body
   Future<void> fetchUserDetails() async {
     //API call to fetch user details
@@ -29,8 +30,42 @@ class PatientController extends GetxController {
       var jsonData = json.decode(res.body);
 
       if (jsonData['success']) {
+        isLoading.value = false;
         //If user details are fetched successfully
         user = jsonData['data'];
+        isLoading.value = false;
+        update();
+      } else {
+        ErrorSnackBar(
+          textMsg: 'Internal Server Error',
+        ).show(Get.context as BuildContext);
+      }
+    } catch (e) {
+      isLoading.value = false;
+      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
+    }
+  }
+
+  Future<void> fetchAllDoctors() async {
+    //API call to fetch user details
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+      String body = jsonEncode({
+        "id": userId,
+      });
+
+      http.Response res = await http.get(
+        Uri.parse(
+            'https://nirogbharatbackend.azurewebsites.net/api/getAllDoctors'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      var jsonData = json.decode(res.body);
+      if (jsonData['success']) {
+        //If user details are fetched successfully
+        allDoctors = jsonData['data'];
+        print(allDoctors[0]['SpecializedField']);
         isLoading.value = false;
         update();
       } else {
