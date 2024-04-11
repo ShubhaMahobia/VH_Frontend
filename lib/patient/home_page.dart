@@ -113,7 +113,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Container(
+                                child: SizedBox(
                                   width: 100,
                                   child: Text(
                                     textAlign: TextAlign.center,
@@ -164,18 +164,18 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                   Get.to(() => const NearbyHospital());
                                 },
                                 child: Container(
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.location_pin,
-                                      color: Colors.white,
-                                    ),
-                                  ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100),
                                     color: Colors.blue,
                                   ),
                                   height: 50,
                                   width: 50,
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.location_pin,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                               Padding(
