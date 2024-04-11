@@ -7,6 +7,7 @@ import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 
 class PatientController extends GetxController {
   var user = {};
+  RxBool isUserDataLoading = true.obs;
   RxBool isLoading = true.obs;
   RxBool isEditing = false.obs;
   RxString lat = "".obs;
@@ -16,7 +17,7 @@ class PatientController extends GetxController {
   var singleHospital = [];
 //Function to fetch user details which will take email as body
   Future<void> fetchUserDetails() async {
-    //API call to fetch user details
+    isUserDataLoading.value = true;
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       String? userId = prefs.getString('userId');
@@ -32,26 +33,25 @@ class PatientController extends GetxController {
       );
 
       var jsonData = json.decode(res.body);
-
       if (jsonData['success']) {
-        isLoading.value = false;
-        //If user details are fetched successfully
+        isUserDataLoading.value = false;
         user = jsonData['data'];
-        isLoading.value = false;
         update();
       } else {
+        isUserDataLoading.value = false;
+  
         ErrorSnackBar(
           textMsg: 'Internal Server Error',
         ).show(Get.context as BuildContext);
       }
     } catch (e) {
-      isLoading.value = false;
+      isUserDataLoading.value = false;
       ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }
 
   Future<void> fetchAllDoctors() async {
-    //API call to fetch user details
+    isLoading.value = true;
     try {
       http.Response res = await http.get(
         Uri.parse(
@@ -61,16 +61,17 @@ class PatientController extends GetxController {
 
       var jsonData = json.decode(res.body);
       if (jsonData['success']) {
-        //If user details are fetched successfully
-        allDoctors = jsonData['data'];
         isLoading.value = false;
+        allDoctors = jsonData['data'];
         update();
       } else {
+        isLoading.value = false;
         ErrorSnackBar(
           textMsg: 'Internal Server Error',
         ).show(Get.context as BuildContext);
       }
     } catch (e) {
+      isLoading.value = false;
       ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }
