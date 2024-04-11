@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/common/videoChat/video_chat.dart';
@@ -14,7 +13,7 @@ class BookAppointmentAllDoctor extends StatefulWidget {
 }
 
 class _BookAppointmentAllDoctor extends State<BookAppointmentAllDoctor> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,12 +68,12 @@ class _BookAppointmentAllDoctor extends State<BookAppointmentAllDoctor> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Container(
+                      child: SizedBox(
                         height: MediaQuery.of(context).size.height,
                         child: ListView.builder(
                             itemCount: filteredDoctors.length,

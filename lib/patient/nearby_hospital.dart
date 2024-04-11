@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/patient/controller/patient_controller.dart';
 import 'package:virtual_hospital/patient/detail_hospital.dart';
-import 'package:geolocator/geolocator.dart';
 
 class NearbyHospital extends StatefulWidget {
   const NearbyHospital({super.key});
@@ -13,9 +12,9 @@ class NearbyHospital extends StatefulWidget {
 }
 
 class _NearbyHospital extends State<NearbyHospital> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   PatientController patientController = Get.put(PatientController());
-  bool _isLoading = true;
+
 
   @override
   void initState() {
@@ -78,12 +77,7 @@ class _NearbyHospital extends State<NearbyHospital> {
                 strokeWidth: 1,
               ));
             } else {
-              List<dynamic> filteredDoctors =
-                  controller.allDoctors.where((doctor) {
-                String firstName = doctor['firstName'].toLowerCase();
-                String searchTerm = _searchController.text.toLowerCase();
-                return firstName.contains(searchTerm);
-              }).toList();
+              
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,12 +132,12 @@ class _NearbyHospital extends State<NearbyHospital> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Container(
+                      child: SizedBox(
                         height: MediaQuery.of(context).size.height,
                         child: ListView.builder(
                             itemCount: patientController.hospitals.length,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 class DoctorHomepage extends StatefulWidget {
@@ -91,7 +91,8 @@ class _DoctorHomepageState extends State<DoctorHomepage> {
                                   .withOpacity(0.3), // Color of the shadow
                               spreadRadius: 5, // Spread radius of the shadow
                               blurRadius: 7, // Blur radius of the shadow
-                              offset: Offset(0, 3), // Offset of the shadow
+                              offset:
+                                  const Offset(0, 3), // Offset of the shadow
                             ),
                           ],
                           borderRadius: BorderRadius.circular(10),

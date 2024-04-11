@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,8 +22,8 @@ class GeneratePrescription extends StatefulWidget {
 }
 
 class _GeneratePrescription extends State<GeneratePrescription> {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _prescription = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _prescription = TextEditingController();
   Uint8List? image;
   @override
   void initState() {

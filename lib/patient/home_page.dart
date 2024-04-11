@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/doctor/create_pres.dart';
-import 'package:virtual_hospital/doctor/doctor_profile.dart';
 import 'package:virtual_hospital/patient/blog_post.dart';
 import 'package:virtual_hospital/patient/bookAppointment/book_appointment_all_doctor.dart';
 import 'package:virtual_hospital/patient/controller/patient_controller.dart';
@@ -63,11 +60,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       ],
                     ),
                     const CircleAvatar(
+                      radius: 20,
                       child: Image(
                           fit: BoxFit.cover,
                           image: NetworkImage(
                               'https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg')),
-                      radius: 20,
                       // backgroundImage: NetworkImage('url'),
                     ),
                   ],
@@ -93,7 +90,8 @@ class _PatientHomePageState extends State<PatientHomePage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(() => BookAppointmentAllDoctor());
+                                  Get.to(
+                                      () => const BookAppointmentAllDoctor());
                                   // Get.to(
                                   //   () => CallPage(
                                   //       userName: controller.user['firstName'],

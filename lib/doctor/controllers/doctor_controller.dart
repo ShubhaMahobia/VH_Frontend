@@ -237,7 +237,6 @@ class DoctorController extends GetxController {
 
   Future<void> generateSendPrescription(
       String docId, String patientId, String title, String description) async {
-    print("Function Called");
     EasyLoading.show(status: 'Loading...');
     final pdf = pw.Document();
     pdf.addPage(
@@ -258,18 +257,7 @@ class DoctorController extends GetxController {
         .ref()
         .child('prescriptions')
         .child('prescription.pdf');
-    final uploadTask = storageRef.putFile(file);
-
-    // You can listen to the upload progress if needed
-    uploadTask.snapshotEvents.listen((event) {
-      final progress = event.bytesTransferred / event.totalBytes;
-      print('Upload progress: $progress');
-    });
-
-    // Wait for the upload to complete
-    await uploadTask.whenComplete(() => print('Upload complete'));
-
-    // Optionally, you can get the download URL of the uploaded file
+    storageRef.putFile(file);
     final downloadURL = await storageRef.getDownloadURL();
     try {
       String body = jsonEncode({
@@ -288,7 +276,6 @@ class DoctorController extends GetxController {
         body: body,
       );
       var jsonData = json.decode(res.body);
-      print(jsonData);
       if (jsonData['success']) {
         EasyLoading.dismiss();
         SuccessSnackbar(textMsg: 'Prescription Sent Successfully')
