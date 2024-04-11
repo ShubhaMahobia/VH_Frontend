@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -11,7 +13,9 @@ import 'package:virtual_hospital/doctor/doctor_profile.dart';
 import 'package:virtual_hospital/services/firebase_auth_services.dart';
 import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:pdf/widgets.dart' as pw;
 import 'package:virtual_hospital/util/snackbar/success_snackbar.dart';
+import 'package:path_provider/path_provider.dart';
 
 class DoctorController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -169,7 +173,7 @@ class DoctorController extends GetxController {
         });
         http.Response res = await http.post(
           Uri.parse(
-              'http://172.16.17.88:8080/api/registerDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+              'https://nirogbharatbackend.azurewebsites.net/api/registerDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
@@ -227,6 +231,78 @@ class DoctorController extends GetxController {
         ).show(Get.context as BuildContext);
       }
     } catch (e) {
+      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
+    }
+  }
+
+  Future<void> generateSendPrescription(
+      String docId, String patientId, String title, String description) async {
+    print("Function Called");
+    EasyLoading.show(status: 'Loading...');
+    final pdf = pw.Document();
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) => pw.Center(
+          child: pw.Text(description),
+        ),
+      ),
+    );
+
+    // Save PDF locally
+    final tempDir = await getTemporaryDirectory();
+    final file = File('${tempDir.path}/prescription.pdf');
+    await file.writeAsBytes(await pdf.save());
+
+    // Upload PDF to Firebase Storage
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('prescriptions')
+        .child('prescription.pdf');
+    final uploadTask = storageRef.putFile(file);
+
+    // You can listen to the upload progress if needed
+    uploadTask.snapshotEvents.listen((event) {
+      final progress = event.bytesTransferred / event.totalBytes;
+      print('Upload progress: $progress');
+    });
+
+    // Wait for the upload to complete
+    await uploadTask.whenComplete(() => print('Upload complete'));
+
+    // Optionally, you can get the download URL of the uploaded file
+    final downloadURL = await storageRef.getDownloadURL();
+    try {
+      String body = jsonEncode({
+        "doctorId": docId,
+        "patientId": patientId,
+        "documentId": "451684",
+        "date": "10/04/2024",
+        "title": title,
+        "description": description,
+        "documentLink": downloadURL,
+      });
+      http.Response res = await http.post(
+        Uri.parse(
+            'http://192.168.136.120:8080/api/generatePrescription'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+      var jsonData = json.decode(res.body);
+      print(jsonData);
+      if (jsonData['success']) {
+        EasyLoading.dismiss();
+        SuccessSnackbar(textMsg: 'Prescription Sent Successfully')
+            .show(Get.context as BuildContext);
+        isLoading.value = false;
+        update();
+      } else {
+        EasyLoading.dismiss();
+        ErrorSnackBar(
+          textMsg: 'Internal Server Error',
+        ).show(Get.context as BuildContext);
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
       ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }
   }

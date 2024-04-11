@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:virtual_hospital/doctor/create_pres.dart';
+import 'package:virtual_hospital/doctor/doctor_profile.dart';
 import 'package:virtual_hospital/patient/blog_post.dart';
 import 'package:virtual_hospital/patient/bookAppointment/book_appointment_all_doctor.dart';
 import 'package:virtual_hospital/patient/controller/patient_controller.dart';
@@ -326,15 +329,29 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                                       fontSize: 10)),
                                         ],
                                       ),
-                                      CircleAvatar(
-                                        backgroundColor: index == 0
-                                            ? Colors.white
-                                            : Colors.blue,
-                                        child: Icon(
-                                          Icons.add,
-                                          color: index == 0
-                                              ? Colors.black
-                                              : Colors.white,
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.to(
+                                              () => GeneratePrescription(
+                                                    doctorName:
+                                                        "${controller.allDoctors[index]['firstName']}  ${controller.allDoctors[index]['LastName']}",
+                                                    doctorId: controller
+                                                            .allDoctors[index]
+                                                        ['_id'],
+                                                  ),
+                                              transition:
+                                                  Transition.noTransition);
+                                        },
+                                        child: CircleAvatar(
+                                          backgroundColor: index == 0
+                                              ? Colors.white
+                                              : Colors.blue,
+                                          child: Icon(
+                                            Icons.add,
+                                            color: index == 0
+                                                ? Colors.black
+                                                : Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -472,30 +489,33 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            //Patient Name
-                                            Text(
-                                              index == 0
-                                                  ? 'Prescriptions'
-                                                  : 'Lab Reports',
-                                              style:
-                                                  GoogleFonts.plusJakartaSans(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 16),
-                                            ),
-                                            //Patient Email
-                                            Text(
-                                              'view now',
-                                              style:
-                                                  GoogleFonts.plusJakartaSans(
-                                                fontSize: 12,
-                                                color: Colors.blue,
+                                        child: GestureDetector(
+                                          onTap: () {},
+                                          child: Column(
+                                            children: [
+                                              //Patient Name
+                                              Text(
+                                                index == 0
+                                                    ? 'Prescriptions'
+                                                    : 'Lab Reports',
+                                                style:
+                                                    GoogleFonts.plusJakartaSans(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 16),
                                               ),
-                                            ),
-                                          ],
+                                              //Patient Email
+                                              Text(
+                                                'view now',
+                                                style:
+                                                    GoogleFonts.plusJakartaSans(
+                                                  fontSize: 12,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       )
                                     ],
