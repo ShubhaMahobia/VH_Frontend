@@ -18,18 +18,16 @@ class PatientHomePage extends StatefulWidget {
 
 class _PatientHomePageState extends State<PatientHomePage> {
   PatientController patientController = Get.put(PatientController());
-  @override
-  void initState() {
-    patientController.fetchUserDetails();
-    patientController.fetchAllDoctors();
-    patientController.fetchAllHospital();
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PatientController>(
+      initState: (state) => {
+        patientController.fetchUserDetails(),
+        patientController.fetchAllDoctors(),
+      },
       builder: (controller) {
-        if (controller.isLoading.value) {
+        if (controller.isUserDataLoading.value || controller.isLoading.value) {
           return const Center(
               child: CircularProgressIndicator(
             strokeWidth: 1,
@@ -92,11 +90,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                 onTap: () {
                                   Get.to(
                                       () => const BookAppointmentAllDoctor());
-                                  // Get.to(
-                                  //   () => CallPage(
-                                  //       userName: controller.user['firstName'],
-                                  //       callId: '1234'),
-                                  // );
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -220,143 +213,158 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
                         height: 150,
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: patientController.allDoctors.length - 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            //Include Box shadow
-                            return Container(
-                              padding: const EdgeInsets.all(8),
-                              height: 300,
-                              width: 250,
-                              margin: const EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.lightBlue.withOpacity(
-                                          0.3), // Color of the shadow
-                                      spreadRadius:
-                                          5, // Spread radius of the shadow
-                                      blurRadius:
-                                          7, // Blur radius of the shadow
-                                      offset:
-                                         const Offset(
-                                          0, 3), // Offset of the shadow
+                        child: GetBuilder<PatientController>(
+                          builder: (patientController) {
+                            if (patientController.isLoading.value) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              return ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: patientController.allDoctors.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  //Include Box shadow
+                                  return Container(
+                                    padding: const EdgeInsets.all(8),
+                                    height: 300,
+                                    width: 250,
+                                    margin: const EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color:
+                                              Colors.lightBlue.withOpacity(0.3),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: const Offset(0, 3),
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: index == 0
+                                          ? Colors.blueAccent
+                                          : Colors.white,
                                     ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: index == 0
-                                      ? Colors.blueAccent
-                                      : Colors.white),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundImage: NetworkImage(
-                                            patientController.allDoctors[index]
-                                                ['profilePicture']),
-                                        radius: 18,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
                                           children: [
-                                            //Patient Name
-                                            Text(
-                                              'Dr ${controller.allDoctors[index]['firstName']} ${controller.allDoctors[index]['LastName']}',
-                                              style:
-                                                  GoogleFonts.plusJakartaSans(
+                                            CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                patientController
+                                                        .allDoctors[index]
+                                                    ['profilePicture'],
+                                              ),
+                                              radius: 18,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Dr ${controller.allDoctors[index]['firstName']} ${controller.allDoctors[index]['LastName']}',
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
                                                       color: index == 0
                                                           ? Colors.white
                                                           : Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontSize: 16),
-                                            ),
-                                            //Patient Email
-                                            Text(
-                                              patientController
-                                                  .allDoctors[index]
-                                                      ['SpecializedField']
-                                                  .toString(),
-                                              style:
-                                                  GoogleFonts.plusJakartaSans(
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    patientController
+                                                        .allDoctors[index]
+                                                            ['SpecializedField']
+                                                        .toString(),
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
                                                       fontSize: 12,
                                                       color: index == 0
                                                           ? const Color
                                                               .fromARGB(255,
                                                               219, 219, 219)
-                                                          : Colors.black),
-                                            )
+                                                          : Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            controller.allDoctors[index]
-                                                ['Experience'],
-                                            style: GoogleFonts.plusJakartaSans(
-                                                color: index == 0
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                                fontSize: 12),
-                                          ),
-                                          Text(
-                                              controller.allDoctors[index]
-                                                  ['degree'],
-                                              style:
-                                                  GoogleFonts.plusJakartaSans(
-                                                      color: index == 0
-                                                          ? Colors.white
-                                                          : Colors.black,
-                                                      fontSize: 10)),
-                                        ],
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Get.to(
-                                              () => GeneratePrescription(
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  controller.allDoctors[index]
+                                                      ['Experience'],
+                                                  style: GoogleFonts
+                                                      .plusJakartaSans(
+                                                    color: index == 0
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  controller.allDoctors[index]
+                                                      ['degree'],
+                                                  style: GoogleFonts
+                                                      .plusJakartaSans(
+                                                    color: index == 0
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                    fontSize: 10,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.to(
+                                                  () => GeneratePrescription(
                                                     doctorName:
                                                         "${controller.allDoctors[index]['firstName']}  ${controller.allDoctors[index]['LastName']}",
                                                     doctorId: controller
                                                             .allDoctors[index]
                                                         ['_id'],
                                                   ),
-                                              transition:
-                                                  Transition.noTransition);
-                                        },
-                                        child: CircleAvatar(
-                                          backgroundColor: index == 0
-                                              ? Colors.white
-                                              : Colors.blue,
-                                          child: Icon(
-                                            Icons.add,
-                                            color: index == 0
-                                                ? Colors.black
-                                                : Colors.white,
-                                          ),
+                                                  transition:
+                                                      Transition.noTransition,
+                                                );
+                                              },
+                                              child: CircleAvatar(
+                                                backgroundColor: index == 0
+                                                    ? Colors.white
+                                                    : Colors.blue,
+                                                child: Icon(
+                                                  Icons.add,
+                                                  color: index == 0
+                                                      ? Colors.black
+                                                      : Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            }
                           },
                         ),
                       ),
