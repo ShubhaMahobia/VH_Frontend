@@ -53,6 +53,10 @@ dependencies:
   zego_uikit_prebuilt_call: ^4.6.0
   wakelock_plus: ^1.2.2
   uuid: ^4.3.3
+  geolocator: ^11.0.0
+  youtube_player_flutter: ^9.0.0
+  pdf: ^3.10.8
+  path_provider: ^2.1.2
   
 
 dev_dependencies:

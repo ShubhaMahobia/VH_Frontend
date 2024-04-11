@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -6,29 +5,26 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 import 'package:virtual_hospital/common/components/buttons/b1.dart';
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
-import 'package:virtual_hospital/patient/controller/patient_controller.dart';
+import 'package:virtual_hospital/doctor/controllers/doctor_controller.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class ProfilePageDoctor extends StatefulWidget {
+  const ProfilePageDoctor({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfilePageDoctor> createState() => _ProfilePageState();
 }
 
-PatientController patientController = Get.put(PatientController());
+DoctorController doctorController = Get.put(DoctorController());
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePageDoctor> {
   @override
   void initState() {
-    patientController.isEditing.value = false;
-    patientController.fetchUserDetails();
+    doctorController.fetchUserDetails();
     super.initState();
   }
 
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
           style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white),
         ),
       ),
-      body: GetBuilder<PatientController>(
+      body: GetBuilder<DoctorController>(
         builder: (controller) {
           if (controller.isLoading.value) {
             return const Center(
@@ -57,13 +53,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: MediaQuery.of(context).size.width,
                   color: Colors.blue,
                   //Add circle of size 100 in center
-                  child: const Center(
+                  child: Center(
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(
-                          'https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg'),
+                          doctorController.doctor['profilePicture']),
                       radius: 50,
                       backgroundColor: Colors.white,
-                     
                     ),
                   ),
                 ),
@@ -90,13 +85,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                       FormInputField.formTextFieldContainer(
                                           context),
                                   child: TextField(
-                                    enabled: patientController.isEditing.value,
                                     decoration:
                                         FormInputField.textFieldInputDecoration(
                                             context,
-                                            controller.user['firstName'] +
+                                            controller.doctor['firstName'] +
                                                 " " +
-                                                controller.user['LastName']),
+                                                controller.doctor['LastName']),
                                   ),
                                 ),
                               ),
@@ -109,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       FormInputField.formTextFieldContainer(
                                           context),
                                   child: TextField(
-                                    enabled: patientController.isEditing.value,
+                                    //enabled: doctorController.isEditing.value,
                                     decoration:
                                         FormInputField.textFieldInputDecoration(
                                             context, '**** **** **45 6156'),
@@ -125,11 +119,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                       FormInputField.formTextFieldContainer(
                                           context),
                                   child: TextField(
-                                    enabled: patientController.isEditing.value,
+                                    //enabled: doctorController.isEditing.value,
                                     decoration:
                                         FormInputField.textFieldInputDecoration(
                                             context,
-                                            controller.user['phoneNumber']),
+                                            controller.doctor['phoneNumber']),
                                   ),
                                 ),
                               ),
@@ -142,10 +136,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                       FormInputField.formTextFieldContainer(
                                           context),
                                   child: TextField(
-                                    enabled: patientController.isEditing.value,
+                                    //: doctorController.isEditing.value,
                                     decoration:
                                         FormInputField.textFieldInputDecoration(
-                                            context, controller.user['Email']),
+                                            context,
+                                            controller.doctor['Email']),
                                   ),
                                 ),
                               ),
@@ -158,11 +153,46 @@ class _ProfilePageState extends State<ProfilePage> {
                                       FormInputField.formTextFieldContainer(
                                           context),
                                   child: TextField(
-                                    enabled: false,
+                                    //: doctorController.isEditing.value,
                                     decoration:
                                         FormInputField.textFieldInputDecoration(
                                             context,
-                                            controller.user['dateOfBirth']),
+                                            " ${controller.doctor['Experience']} years of experience"),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 50,
+                                  width: 320,
+                                  decoration:
+                                      FormInputField.formTextFieldContainer(
+                                          context),
+                                  child: TextField(
+                                    //: doctorController.isEditing.value,
+                                    decoration:
+                                        FormInputField.textFieldInputDecoration(
+                                            context,
+                                            controller
+                                                .doctor['SpecializedField']),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 50,
+                                  width: 320,
+                                  decoration:
+                                      FormInputField.formTextFieldContainer(
+                                          context),
+                                  child: TextField(
+                                    //: doctorController.isEditing.value,
+                                    decoration:
+                                        FormInputField.textFieldInputDecoration(
+                                            context,
+                                            controller.doctor['address']),
                                   ),
                                 ),
                               ),
@@ -178,15 +208,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ButtonOne(
-                                  buttonText: patientController.isEditing.value
-                                      ? 'Save'
-                                      : 'Edit Profile',
-                                  onTap: () {
-                                    setState(() {
-                                      patientController.isEditing.value =
-                                          !patientController.isEditing.value;
-                                    });
-                                  },
+                                  buttonText: 'Save',
+                                  onTap: () {},
                                 ),
                               ),
                             ],

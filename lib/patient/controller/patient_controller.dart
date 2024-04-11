@@ -9,6 +9,11 @@ class PatientController extends GetxController {
   var user = {};
   RxBool isLoading = true.obs;
   RxBool isEditing = false.obs;
+  RxString lat = "".obs;
+  RxString long = "".obs;
+  var allDoctors = [];
+  var hospitals = [];
+  var singleHospital = [];
 //Function to fetch user details which will take email as body
   Future<void> fetchUserDetails() async {
     //API call to fetch user details
@@ -21,7 +26,7 @@ class PatientController extends GetxController {
 
       http.Response res = await http.post(
         Uri.parse(
-            'http://192.168.1.2:8080/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+            'https://nirogbharatbackend.azurewebsites.net/api/getUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
         headers: {'Content-Type': 'application/json'},
         body: body,
       );
@@ -29,6 +34,7 @@ class PatientController extends GetxController {
       var jsonData = json.decode(res.body);
 
       if (jsonData['success']) {
+        isLoading.value = false;
         //If user details are fetched successfully
         user = jsonData['data'];
         isLoading.value = false;
@@ -38,6 +44,71 @@ class PatientController extends GetxController {
           textMsg: 'Internal Server Error',
         ).show(Get.context as BuildContext);
       }
+    } catch (e) {
+      isLoading.value = false;
+      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
+    }
+  }
+
+  Future<void> fetchAllDoctors() async {
+    //API call to fetch user details
+    try {
+      http.Response res = await http.get(
+        Uri.parse(
+            'https://nirogbharatbackend.azurewebsites.net/api/getAllDoctors'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      var jsonData = json.decode(res.body);
+      if (jsonData['success']) {
+        //If user details are fetched successfully
+        allDoctors = jsonData['data'];
+        isLoading.value = false;
+        update();
+      } else {
+        ErrorSnackBar(
+          textMsg: 'Internal Server Error',
+        ).show(Get.context as BuildContext);
+      }
+    } catch (e) {
+      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
+    }
+  }
+
+  Future<void> fetchAllHospital() async {
+    //API call to fetch user details
+    try {
+      String body = json.encode({"latitude": "$lat", "longitude": "$long"});
+      http.Response res = await http.post(
+          Uri.parse(
+              'https://nirogbharatbackend.azurewebsites.net/api/fetchHospitals'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+          headers: {'Content-Type': 'application/json'},
+          body: body);
+
+      var jsonData = json.decode(res.body);
+      //If user details are fetched successfully
+      hospitals = jsonData;
+      isLoading.value = false;
+      update();
+    } catch (e) {
+      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
+    }
+  }
+
+  // ignore: non_constant_identifier_names
+  Future<void> FetchHospitalbyId(String id) async {
+    try {
+      isLoading.value = true;
+      http.Response res = await http.get(
+        Uri.parse(
+            'https://nirogbharatbackend.azurewebsites.net/api/getHospital/$id'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      var jsonData = json.decode(res.body);
+      singleHospital = [jsonData['hospital']];
+      isLoading.value = false;
+      update();
     } catch (e) {
       ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
     }

@@ -25,7 +25,7 @@ class _DummyScreenState extends State<DummyScreen> {
   }
 
   void configuringMeeting() {
-    var uuid = Uuid();
+    var uuid = const Uuid();
     String randomId = uuid.v4();
     callId = randomId;
     userName = patientController.user['firstName'] +
