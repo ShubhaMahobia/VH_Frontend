@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:virtual_hospital/common/videoChat/video_chat.dart';
+import 'package:virtual_hospital/patient/bookAppointment/book_appointment_doctor_detail.dart';
 import 'package:virtual_hospital/patient/controller/patient_controller.dart';
 import 'package:virtual_hospital/patient/profile_page.dart';
+
 
 class BookAppointmentAllDoctor extends StatefulWidget {
   const BookAppointmentAllDoctor({super.key});
@@ -175,10 +176,9 @@ class _BookAppointmentAllDoctor extends State<BookAppointmentAllDoctor> {
                                             GestureDetector(
                                               onTap: () {
                                                 Get.to(
-                                                  () => CallPage(
-                                                      userName: controller
-                                                          .user['firstName'],
-                                                      callId: '123456'),
+                                                  () => const DoctorDetail(),
+                                                  transition:
+                                                      Transition.noTransition,
                                                 );
                                               },
                                               child: const CircleAvatar(
