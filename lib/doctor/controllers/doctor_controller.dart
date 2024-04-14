@@ -29,15 +29,26 @@ class DoctorController extends GetxController {
   TextEditingController clinicAddressController = TextEditingController();
   TextEditingController imageLinkController = TextEditingController();
   TextEditingController genderController = TextEditingController();
-  TextEditingController identificationNumberController =
-      TextEditingController();
+  TextEditingController bioController = TextEditingController();
+  TextEditingController startHourController = TextEditingController();
+  TextEditingController endHourController = TextEditingController();
+
+  List<int> daysAvailable = [];
   final FirebaseAuthService _authService = FirebaseAuthService();
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
 
   var doctor = {};
   RxBool isLoading = true.obs;
-
+  List<bool> selectedDays = [false, false, false, false, false, false];
+  List<String> dayNames = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
   void signUpDoctor() async {
     try {
       if (emailController.text.isEmpty) {
@@ -102,11 +113,6 @@ class DoctorController extends GetxController {
 
   void createDoctorProfile() async {
     
-    List<Map<String, String>> availability = [
-      {"day": "Monday", "time": "9am - 5pm"},
-      {"day": "Tuesday", "time": "9am - 5pm"},
-      // Add more days as needed
-    ];
     //Get the values from the text editing controllers
     String firstName = firstNameController.text;
     String lastName = lastNameController.text;
@@ -115,6 +121,9 @@ class DoctorController extends GetxController {
     String experience = experienceController.text;
     String qualification = qualificationController.text;
     String clinicAddress = clinicAddressController.text;
+    int startHour = startHourController.text as int;
+    int endHour = endHourController.text as int;
+    String bio = bioController.text;
 
     //Check if the fields are empty
     if (emailController.text.isEmpty) {
@@ -150,30 +159,48 @@ class DoctorController extends GetxController {
       ErrorSnackBar(textMsg: 'Clinic Address is required')
           .show(Get.context as BuildContext);
       return;
+    } else if (startHour.toString().isEmpty) {
+      ErrorSnackBar(textMsg: 'Please enter your availablity')
+          .show(Get.context as BuildContext);
+      return;
+    } else if (endHour.toString().isEmpty) {
+      ErrorSnackBar(textMsg: 'Please enter your availablity')
+          .show(Get.context as BuildContext);
+      return;
+    } else if (bio.isEmpty) {
+      ErrorSnackBar(textMsg: 'Please tell us about yourself')
+          .show(Get.context as BuildContext);
+      return;
+    } else if ((startHour > endHour) ||
+        (startHour > 24 || endHour > 24) ||
+        (startHour == endHour)) {
+      ErrorSnackBar(textMsg: 'Please enter valid time range')
+          .show(Get.context as BuildContext);
+      return;  
     } else {
       try {
         EasyLoading.show(status: 'Loading...');
-
-        //Image Upload Function -
-
+        Map<String, bool> daysMap = Map.fromIterables(dayNames, selectedDays);
         String body = json.encode({
           "firebaseUserId": FirebaseAuth.instance.currentUser?.uid,
-          "firstName": firstNameController.text,
-          "lastName": lastNameController.text,
+          "firstName": firstName,
+          "lastName": lastName,
           "email": emailController.text,
           "phoneNumber": phoneNumberController.text,
           "experience": experienceController.text,
+          "startTimeHour": startHour.toString(),
+          "endTimeHour": endHour.toString(),
           "gender": _authenticationController.genderController.text,
-          "availability": availability,
           "profilePicture": imageLinkController.text,
           "address": clinicAddressController.text,
-          "specializedField": specificationController.text,
-          "degree": qualificationController.text,
-          "identificationNumber": identificationNumberController.text,
+          "specializedField": specification,
+          "degree": qualification,
+          "breifDescription": bio,
+          "daysAvailable": daysMap,
         });
         http.Response res = await http.post(
           Uri.parse(
-              'https://nirogbharatbackend.azurewebsites.net/api/registerDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+              'http://192.168.1.4:8080/api/registerDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
