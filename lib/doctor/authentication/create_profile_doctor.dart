@@ -8,7 +8,7 @@ import 'package:virtual_hospital/common/components/buttons/b1.dart';
 import 'package:virtual_hospital/common/components/dropdowns/custom_dropdown.dart';
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
 import 'package:virtual_hospital/doctor/controllers/doctor_controller.dart';
-import 'package:virtual_hospital/util/date_picker.dart';
+import 'package:virtual_hospital/doctor/doctor_profile.dart';
 import 'package:virtual_hospital/util/util.dart';
 
 class CreateProfileDoctor extends StatefulWidget {
@@ -22,11 +22,35 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
   Uint8List? image;
   @override
   void initState() {
+    doctorController.selectedDays = [false, false, false, false, false, false];
+    doctorController.firstNameController.clear();
+    doctorController.lastNameController.clear();
+    doctorController.specificationController.clear();
+    doctorController.qualificationController.clear();
+    doctorController.startHourController.clear();
+    doctorController.clinicAddressController.clear();
+    doctorController.phoneNumberController.clear();
+    doctorController.genderController.clear();
+    doctorController.bioController.clear();
+    doctorController.endHourController.clear();
+    doctorController.experienceController.clear();
     super.initState();
   }
 
   @override
   void dispose() {
+    doctorController.selectedDays = [false, false, false, false, false, false];
+    doctorController.firstNameController.clear();
+    doctorController.lastNameController.clear();
+    doctorController.specificationController.clear();
+    doctorController.qualificationController.clear();
+    doctorController.startHourController.clear();
+    doctorController.endHourController.clear();
+    doctorController.clinicAddressController.clear();
+    doctorController.phoneNumberController.clear();
+    doctorController.genderController.clear();
+    doctorController.bioController.clear();
+    doctorController.experienceController.clear();
     EasyLoading.dismiss();
     super.dispose();
   }
@@ -64,8 +88,6 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
               const SizedBox(
                 height: 24,
               ),
-              //Create a profile picture upload
-              //This will be a circle avatar
               image != null
                   ? GestureDetector(
                       onTap: () {
@@ -189,21 +211,121 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 50,
-                  width: 320,
-                  decoration: FormInputField.formTextFieldContainer(context),
-                  child: TextField(
-                    
-                    //   controller: _doctorController.phoneNumberController,
-                    
-                    style: GoogleFonts.plusJakartaSans(
-                        fontSize: 14, fontWeight: FontWeight.bold),
-                    decoration: FormInputField.textFieldInputDecoration(
-                        context, 'Availablity*'),
-                  ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Availablity*',
+                      style: GoogleFonts.plusJakartaSans(
+                          fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 50,
+                            width: 150,
+                            decoration:
+                                FormInputField.formTextFieldContainer(context),
+                            child: TextField(
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(2)
+                              ],
+                              keyboardType: TextInputType.number,
+                              controller: _doctorController.startHourController,
+                              style: GoogleFonts.plusJakartaSans(
+                                
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              decoration:
+                                  FormInputField.textFieldInputDecoration(
+                                context,
+                                '9:00*',
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 50,
+                            width: 150,
+                            decoration:
+                                FormInputField.formTextFieldContainer(context),
+                            child: TextField(
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(2)
+                              ],
+                              keyboardType: TextInputType.number,
+                              controller: _doctorController.endHourController,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              decoration:
+                                  FormInputField.textFieldInputDecoration(
+                                context,
+                                '14:00*',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          for (var i = 0; i < 6; i++)
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  doctorController.selectedDays[i] =
+                                      !doctorController.selectedDays[i];
+                                });
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(7),
+                                      color: doctorController.selectedDays[i]
+                                          ? Colors.blue
+                                          : Colors.white,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        _getDayName(i),
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              doctorController.selectedDays[i]
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -264,23 +386,20 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 50,
+                  height: 100,
                   width: 320,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
-                    inputFormatters: [LengthLimitingTextInputFormatter(12)],
-                    controller: _doctorController.phoneNumberController,
-                    keyboardType: TextInputType.number,
+                    maxLines: null,
+                    expands: false,
+                    controller: _doctorController.bioController,
+                    keyboardType: TextInputType.text,
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 14, fontWeight: FontWeight.bold),
                     decoration: FormInputField.textFieldInputDecoration(
-                        context, 'Aadhar Card Number*'),
+                        context, 'Enter your bio*'),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CalendarWidget(),
               ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
@@ -305,4 +424,23 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
       ),
     );
   }
+  String _getDayName(int index) {
+    switch (index) {
+      case 0:
+        return 'Mon';
+      case 1:
+        return 'Tue';
+      case 2:
+        return 'Wed';
+      case 3:
+        return 'Thu';
+      case 4:
+        return 'Fri';
+      case 5:
+        return 'Sat';
+      default:
+        return '';
+    }
+  }
+  
 }
