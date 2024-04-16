@@ -42,10 +42,11 @@ class Util {
 
   Future<String> saveData({required Uint8List file}) async {
     DateTime now = DateTime.now();
-    var datestamp = DateFormat("yyyy/MM/dd-'T'-HH/mm/ss");
-    String currentdate = datestamp.format(now);
+    String formattedDate = DateFormat('yyyy-MM-dd_HH-mm-ss').format(now);
+    String fileNameWithDate = '$formattedDate.file';
+    
     try {
-      String imageUrl = await uploadImage('$currentdate.file', file);
+      String imageUrl = await uploadImage(fileNameWithDate, file);
       await _fireStore.collection('userProfile').add({
         'ImageLink': imageUrl,
       });
