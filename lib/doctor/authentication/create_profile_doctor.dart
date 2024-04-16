@@ -63,10 +63,14 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
   }
 
   void saveProfile() async {
-    _doctorController.imageLinkController.text =
-        await Util().saveData(file: image!);
-    
+    if (image != null) {
+      String newImageLink = await Util().saveData(file: image!);
+      setState(() {
+        _doctorController.imageLinkController.text = newImageLink;
+      });
   }
+}
+
 
   final DoctorController _doctorController = Get.put(DoctorController());
 
@@ -227,30 +231,25 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            height: 50,
-                            width: 150,
-                            decoration:
-                                FormInputField.formTextFieldContainer(context),
-                            child: TextField(
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(2)
-                              ],
-                              keyboardType: TextInputType.number,
-                              controller: _doctorController.startHourController,
-                              style: GoogleFonts.plusJakartaSans(
-                                
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              decoration:
-                                  FormInputField.textFieldInputDecoration(
-                                context,
-                                '9:00*',
-                              ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                          height: 50,
+                          width: 150,
+                          decoration:
+                              FormInputField.formTextFieldContainer(context),
+                          child: TextField(
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(2)
+                            ],
+                            keyboardType: TextInputType.number,
+                            controller: _doctorController.startHourController,
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            decoration: FormInputField.textFieldInputDecoration(
+                              context,
+                              '9:00*',
                             ),
                           ),
                         ),
@@ -298,9 +297,11 @@ class _CreateProfileDoctorState extends State<CreateProfileDoctor> {
                               child: Column(
                                 children: [
                                   Container(
-                                    height: 50,
-                                    width: 50,
+                                    height: 40,
+                                    width: 40,
                                     decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.grey, width: 0.5),
                                       borderRadius: BorderRadius.circular(7),
                                       color: doctorController.selectedDays[i]
                                           ? Colors.blue

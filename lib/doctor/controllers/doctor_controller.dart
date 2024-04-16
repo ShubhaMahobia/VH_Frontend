@@ -121,8 +121,8 @@ class DoctorController extends GetxController {
     String experience = experienceController.text;
     String qualification = qualificationController.text;
     String clinicAddress = clinicAddressController.text;
-    int startHour = startHourController.text as int;
-    int endHour = endHourController.text as int;
+    String startHour = startHourController.text;
+    String endHour = endHourController.text;
     String bio = bioController.text;
 
     //Check if the fields are empty
@@ -171,12 +171,6 @@ class DoctorController extends GetxController {
       ErrorSnackBar(textMsg: 'Please tell us about yourself')
           .show(Get.context as BuildContext);
       return;
-    } else if ((startHour > endHour) ||
-        (startHour > 24 || endHour > 24) ||
-        (startHour == endHour)) {
-      ErrorSnackBar(textMsg: 'Please enter valid time range')
-          .show(Get.context as BuildContext);
-      return;  
     } else {
       try {
         EasyLoading.show(status: 'Loading...');
@@ -188,8 +182,8 @@ class DoctorController extends GetxController {
           "email": emailController.text,
           "phoneNumber": phoneNumberController.text,
           "experience": experienceController.text,
-          "startTimeHour": startHour.toString(),
-          "endTimeHour": endHour.toString(),
+          "startTimeHour": startHour,
+          "endTimeHour": endHour,
           "gender": _authenticationController.genderController.text,
           "profilePicture": imageLinkController.text,
           "address": clinicAddressController.text,
@@ -200,13 +194,12 @@ class DoctorController extends GetxController {
         });
         http.Response res = await http.post(
           Uri.parse(
-              'http://192.168.1.4:8080/api/registerDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+              'https://nirogbharatbackend.azurewebsites.net/api/registerDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
 
         var jsonData = json.decode(res.body);
-       
         if (jsonData['success']) {
           _authenticationController.isPatient.value = false;
           EasyLoading.dismiss();
@@ -218,7 +211,7 @@ class DoctorController extends GetxController {
         } else {
           EasyLoading.dismiss();
           ErrorSnackBar(
-            textMsg: 'Internal Server Error, Please try again later',
+            textMsg: jsonData['message'],
           ).show(Get.context as BuildContext);
         }
       } catch (e) {
@@ -242,7 +235,7 @@ class DoctorController extends GetxController {
 
       http.Response res = await http.post(
         Uri.parse(
-            'http://192.168.136.120:8080/api/getDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+            'https://nirogbharatbackend.azurewebsites.net/api/getDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address
         headers: {'Content-Type': 'application/json'},
         body: body,
       );
@@ -254,7 +247,7 @@ class DoctorController extends GetxController {
         update();
       } else {
         ErrorSnackBar(
-          textMsg: 'Internal Server Error',
+          textMsg: jsonData['message'],
         ).show(Get.context as BuildContext);
       }
     } catch (e) {
@@ -298,7 +291,7 @@ class DoctorController extends GetxController {
       });
       http.Response res = await http.post(
         Uri.parse(
-            'http://192.168.136.120:8080/api/generatePrescription'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+            'https://nirogbharatbackend.azurewebsites.net/api/generatePrescription'), // Replace YOUR_SERVER_ADDRESS with the correct server address
         headers: {'Content-Type': 'application/json'},
         body: body,
       );
