@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 import 'package:virtual_hospital/doctor/authentication/create_profile_doctor.dart';
+import 'package:virtual_hospital/doctor/doctor_homepage.dart';
 import 'package:virtual_hospital/doctor/doctor_profile.dart';
 import 'package:virtual_hospital/services/firebase_auth_services.dart';
 import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
@@ -207,7 +208,7 @@ class DoctorController extends GetxController {
             textMsg: 'Profile Created Successfully',
           ).show(Get.context as BuildContext);
           await Future.delayed(const Duration(seconds: 1))
-              .then((value) => Get.to(() => const ProfilePageDoctor()));
+              .then((value) => Get.to(() => const DoctorHomepage()));
         } else {
           EasyLoading.dismiss();
           ErrorSnackBar(
