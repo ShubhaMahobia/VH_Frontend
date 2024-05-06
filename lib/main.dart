@@ -8,8 +8,6 @@ import 'package:virtual_hospital/doctor/doctor_homepage.dart';
 import 'package:virtual_hospital/patient/authentication/login_screen.dart';
 import 'package:virtual_hospital/firebase_options.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:virtual_hospital/patient/home_page.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
