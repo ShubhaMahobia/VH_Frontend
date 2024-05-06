@@ -19,7 +19,7 @@ DoctorController doctorController = Get.put(DoctorController());
 class _ProfilePageState extends State<ProfilePageDoctor> {
   @override
   void initState() {
-    doctorController.fetchUserDetails();
+    doctorController.fetchDoctorDetails();
     super.initState();
   }
 
@@ -89,8 +89,8 @@ class _ProfilePageState extends State<ProfilePageDoctor> {
                                         FormInputField.textFieldInputDecoration(
                                             context,
                                             controller.doctor['firstName'] +
-                                                " " +
-                                                controller.doctor['LastName']),
+                                                ' ' +
+                                                controller.doctor['lastName']),
                                   ),
                                 ),
                               ),
@@ -123,59 +123,8 @@ class _ProfilePageState extends State<ProfilePageDoctor> {
                                     decoration:
                                         FormInputField.textFieldInputDecoration(
                                             context,
-                                            controller.doctor['phoneNumber']),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 50,
-                                  width: 320,
-                                  decoration:
-                                      FormInputField.formTextFieldContainer(
-                                          context),
-                                  child: TextField(
-                                    //: doctorController.isEditing.value,
-                                    decoration:
-                                        FormInputField.textFieldInputDecoration(
-                                            context,
-                                            controller.doctor['Email']),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 50,
-                                  width: 320,
-                                  decoration:
-                                      FormInputField.formTextFieldContainer(
-                                          context),
-                                  child: TextField(
-                                    //: doctorController.isEditing.value,
-                                    decoration:
-                                        FormInputField.textFieldInputDecoration(
-                                            context,
-                                            " ${controller.doctor['Experience']} years of experience"),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 50,
-                                  width: 320,
-                                  decoration:
-                                      FormInputField.formTextFieldContainer(
-                                          context),
-                                  child: TextField(
-                                    //: doctorController.isEditing.value,
-                                    decoration:
-                                        FormInputField.textFieldInputDecoration(
-                                            context,
                                             controller
-                                                .doctor['SpecializedField']),
+                                                .doctor['specializedField']),
                                   ),
                                 ),
                               ),
@@ -192,7 +141,59 @@ class _ProfilePageState extends State<ProfilePageDoctor> {
                                     decoration:
                                         FormInputField.textFieldInputDecoration(
                                             context,
-                                            controller.doctor['address']),
+                                            controller.doctor['email']),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 50,
+                                  width: 320,
+                                  decoration:
+                                      FormInputField.formTextFieldContainer(
+                                          context),
+                                  child: TextField(
+                                    //: doctorController.isEditing.value,
+                                    decoration:
+                                        FormInputField.textFieldInputDecoration(
+                                            context,
+                                            " ${doctorController.doctor['experience']} years of experience"),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 50,
+                                  width: 320,
+                                  decoration:
+                                      FormInputField.formTextFieldContainer(
+                                          context),
+                                  child: TextField(
+                                    //: doctorController.isEditing.value,
+                                    decoration:
+                                        FormInputField.textFieldInputDecoration(
+                                            context,
+                                            doctorController.doctor['degree']),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 50,
+                                  width: 320,
+                                  decoration:
+                                      FormInputField.formTextFieldContainer(
+                                          context),
+                                  child: TextField(
+                                    //: doctorController.isEditing.value,
+                                    decoration:
+                                        FormInputField.textFieldInputDecoration(
+                                            context,
+                                            doctorController
+                                                .doctor['phoneNumber']),
                                   ),
                                 ),
                               ),
