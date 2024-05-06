@@ -3,12 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
+import 'package:virtual_hospital/doctor/authentication/create_profile_doctor.dart';
 import 'package:virtual_hospital/doctor/doctor_homepage.dart';
 import 'package:virtual_hospital/patient/authentication/login_screen.dart';
 import 'package:virtual_hospital/firebase_options.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:virtual_hospital/patient/home_page.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       home: user == null
           ? const LoginScreen()
           : _authenticationController.isPatient.value
-              ? const PatientHomePage()
+              ? const DoctorHomepage()
               : const DoctorHomepage(),
       builder: EasyLoading.init(),
     );
