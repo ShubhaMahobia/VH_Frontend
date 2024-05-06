@@ -24,7 +24,10 @@ class _DoctorHomepageState extends State<DoctorHomepage> {
       doctorController.fetchDoctorDetails();
     }, builder: (controller) {
       if (doctorController.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
+        return const Center(
+            child: CircularProgressIndicator(
+          strokeWidth: 1,
+        ));
       } else {
         return Scaffold(
           backgroundColor: const Color.fromARGB(255, 240, 240, 240),
@@ -197,6 +200,57 @@ class _DoctorHomepageState extends State<DoctorHomepage> {
                                 ],
                               )
                             ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Recent Patients',
+                        style: GoogleFonts.plusJakartaSans(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'View All',
+                        style: GoogleFonts.plusJakartaSans(
+                            color: Colors.blue, fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 4,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          trailing: const Icon(Icons.chat_outlined),
+                          title: Text(
+                            'John Doe',
+                            style: GoogleFonts.plusJakartaSans(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            'mahobiashubham4@gmail.com',
+                            style: GoogleFonts.plusJakartaSans(
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.grey),
                           ),
                         );
                       },
