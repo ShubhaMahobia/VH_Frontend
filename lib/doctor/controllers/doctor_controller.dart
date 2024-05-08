@@ -106,7 +106,7 @@ class DoctorController extends GetxController {
       SuccessSnackbar(textMsg: 'Login successful')
           .show(Get.context as BuildContext);
       await Future.delayed(const Duration(seconds: 1))
-          .then((value) => Get.to(() => const ProfilePageDoctor()));
+          .then((value) => Get.to(() => const DoctorHomepage()));
     } catch (e) {
       EasyLoading.dismiss();
     }
@@ -240,6 +240,7 @@ class DoctorController extends GetxController {
       );
       var jsonData = json.decode(res.body);
       if (jsonData['success']) {
+        prefs.setString('userType', jsonData['data']['userType']);
         //If user details are fetched successfully
         doctor = jsonData['data'];
         isLoading.value = false;
