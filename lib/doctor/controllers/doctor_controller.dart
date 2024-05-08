@@ -102,11 +102,29 @@ class DoctorController extends GetxController {
         'userId',
         user?.uid as String,
       );
-      EasyLoading.dismiss();
-      SuccessSnackbar(textMsg: 'Login successful')
-          .show(Get.context as BuildContext);
-      await Future.delayed(const Duration(seconds: 1))
-          .then((value) => Get.to(() => const DoctorHomepage()));
+      String body = json.encode({
+        "firebaseUserId": FirebaseAuth.instance.currentUser!.uid,
+      });
+      http.Response res = await http.post(
+        Uri.parse(
+            'https://nirogbharatbackend.azurewebsites.net/api/isDoctorExist'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+      var jsonData = json.decode(res.body);
+      if (jsonData['success'] == true) {
+        if (jsonData['isPresent'] == true) {
+          EasyLoading.dismiss();
+          SuccessSnackbar(textMsg: 'Login successful')
+              .show(Get.context as BuildContext);
+          await Future.delayed(const Duration(seconds: 1))
+              .then((value) => Get.to(() => const DoctorHomepage()));
+        } else {
+          EasyLoading.dismiss();
+          ErrorSnackBar(textMsg: 'User does not exist, Login Failed')
+              .show(Get.context as BuildContext);
+        }
+      }
     } catch (e) {
       EasyLoading.dismiss();
     }
