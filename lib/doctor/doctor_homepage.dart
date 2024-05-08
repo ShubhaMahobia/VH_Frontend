@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/doctor/controllers/doctor_controller.dart';
+import 'package:virtual_hospital/doctor/create_pres.dart';
 import 'package:virtual_hospital/doctor/doctor_profile.dart';
 
 class DoctorHomepage extends StatefulWidget {
@@ -228,6 +229,7 @@ class _DoctorHomepageState extends State<DoctorHomepage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
+                    padding: const EdgeInsets.all(10),
                     height: 200,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -254,6 +256,81 @@ class _DoctorHomepageState extends State<DoctorHomepage> {
                           ),
                         );
                       },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => GeneratePrescription(
+                          doctorName: 'Dr. ' +
+                              controller.doctor['firstName'] +
+                              ' ' +
+                              controller.doctor['lastName'],
+                          doctorId: controller.doctor['firstName'],
+                        ));
+                  },
+                  child: Container(
+                    height: 60,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlue,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.lightBlue.withOpacity(0.3),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: const Offset(0, 3),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        'Generate Prescription',
+                        style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      trailing: const Icon(
+                        Icons.note_alt_sharp,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  decoration: BoxDecoration(
+                    color: Colors.lightBlue,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.lightBlue.withOpacity(0.3),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      'Patients Notes & History',
+                      style: GoogleFonts.plusJakartaSans(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    trailing: const Icon(
+                      Icons.history,
+                      color: Colors.white,
                     ),
                   ),
                 ),
