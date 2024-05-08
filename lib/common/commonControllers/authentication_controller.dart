@@ -14,6 +14,7 @@ import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 import 'package:virtual_hospital/util/snackbar/success_snackbar.dart';
 
 class AuthenticationController extends GetxController {
+  RxBool isLoading = true.obs;
   RxBool isPatient = true.obs;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -154,6 +155,8 @@ class AuthenticationController extends GetxController {
 
 
   Future<void> signOut() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
     SuccessSnackbar(textMsg: 'Signed Out Successfully!')
         .show(Get.context as BuildContext);
     await Future.delayed(

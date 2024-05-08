@@ -268,7 +268,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'Dr ${controller.allDoctors[index]['firstName']} ${controller.allDoctors[index]['LastName']}',
+                                                    'Dr ${controller.allDoctors[index]['firstName']} ${controller.allDoctors[index]['lastName']}',
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
                                                       color: index == 0
@@ -282,7 +282,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                                   Text(
                                                     patientController
                                                         .allDoctors[index]
-                                                            ['SpecializedField']
+                                                            ['specializedField']
                                                         .toString(),
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
@@ -308,8 +308,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  controller.allDoctors[index]
-                                                      ['Experience'],
+                                                  '15',
                                                   style: GoogleFonts
                                                       .plusJakartaSans(
                                                     color: index == 0

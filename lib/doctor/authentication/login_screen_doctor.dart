@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/doctor/authentication/sign_up_screen.dart';
+import 'package:virtual_hospital/doctor/doctor_profile.dart';
 import 'package:virtual_hospital/patient/authentication/login_screen.dart';
 
 import 'package:virtual_hospital/common/components/textfields/input_decoration.dart';
@@ -57,7 +58,7 @@ class _LoginScreenDoctorState extends State<LoginScreenDoctor> {
                   height: 50,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
-                      controller: _authenticationController.emailController,
+                      controller: doctorController.emailController,
                       style: GoogleFonts.plusJakartaSans(
                           color: Colors.black, fontWeight: FontWeight.w400),
                       decoration: FormInputField.textFieldInputDecoration(
@@ -71,7 +72,7 @@ class _LoginScreenDoctorState extends State<LoginScreenDoctor> {
                   height: 50,
                   decoration: FormInputField.formTextFieldContainer(context),
                   child: TextField(
-                    controller: _authenticationController.passwordController,
+                    controller: doctorController.passwordController,
                     style: GoogleFonts.plusJakartaSans(
                         color: Colors.black, fontWeight: FontWeight.w400),
                     obscureText: true,
@@ -85,7 +86,7 @@ class _LoginScreenDoctorState extends State<LoginScreenDoctor> {
                 GestureDetector(
                   onTap: () {
                     FocusScope.of(context).unfocus();
-                    _authenticationController.signIn();
+                    doctorController.signInDoctor();
                   },
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.0625,

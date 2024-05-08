@@ -34,6 +34,7 @@ class PatientController extends GetxController {
 
       var jsonData = json.decode(res.body);
       if (jsonData['success']) {
+        prefs.setString('userType', jsonData['data']['userType']);
         isUserDataLoading.value = false;
         user = jsonData['data'];
         update();
