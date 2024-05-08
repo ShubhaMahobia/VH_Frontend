@@ -113,7 +113,6 @@ class DoctorController extends GetxController {
   }
 
   void createDoctorProfile() async {
-    
     //Get the values from the text editing controllers
     String firstName = firstNameController.text;
     String lastName = lastNameController.text;
@@ -225,7 +224,7 @@ class DoctorController extends GetxController {
     }
   }
 
-  Future<void> fetchUserDetails() async {
+  Future<void> fetchDoctorDetails() async {
     //API call to fetch user details
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -233,7 +232,6 @@ class DoctorController extends GetxController {
       String body = jsonEncode({
         "id": userId,
       });
-
       http.Response res = await http.post(
         Uri.parse(
             'https://nirogbharatbackend.azurewebsites.net/api/getDoctor'), // Replace YOUR_SERVER_ADDRESS with the correct server address

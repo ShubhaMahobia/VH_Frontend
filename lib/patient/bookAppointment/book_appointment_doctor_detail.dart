@@ -41,7 +41,7 @@ class _DoctorDetailState extends State<DoctorDetail> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
+                  child: SizedBox(
                     height: 100,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,

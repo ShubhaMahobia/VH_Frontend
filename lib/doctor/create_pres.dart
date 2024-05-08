@@ -112,7 +112,7 @@ class _GeneratePrescription extends State<GeneratePrescription> {
                             fontWeight: FontWeight.bold,
                           ),
                           decoration: FormInputField.textFieldInputDecoration(
-                              context, patientController.user['firstName'])),
+                              context, '...')),
                     ),
                   ),
                 ],
@@ -134,7 +134,7 @@ class _GeneratePrescription extends State<GeneratePrescription> {
                         fontWeight: FontWeight.bold,
                       ),
                       decoration: FormInputField.textFieldInputDecoration(
-                          context, patientController.user['Email'])),
+                          context, '..')),
                 ),
               ),
               Padding(
