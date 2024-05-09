@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 import 'package:virtual_hospital/doctor/doctor_homepage.dart';
 import 'package:virtual_hospital/patient/authentication/login_screen.dart';
 import 'package:virtual_hospital/firebase_options.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:virtual_hospital/util/footer.dart';
+import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,29 +50,28 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     user = FirebaseAuth.instance.currentUser;
-    checkIfUserIsPatient();
+    user != null ? checkUserType() : () {};
     super.initState();
+    
   }
+
+  Future<void> checkUserType() async {
+    try {
+      final isPatient = await _authenticationController.isUserPatient();
+      _authenticationController.isPatient.value = isPatient;
+    } catch (e) {
+      ErrorSnackBar(textMsg: 'Something Went Wrong')
+          .show(Get.context as BuildContext);
+    }
+}
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
 
 
-  Future<void> checkIfUserIsPatient() async {
-    // final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // if (prefs.getString('userType') == 'patient') {
-    //   _authenticationController.isPatient.value = true;
-    //   _authenticationController.isLoading.value = false;
-    // } else {
-    //   _authenticationController.isPatient.value = false;
-    //   _authenticationController.isLoading.value = false;
-    // }
-  }
-  
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -83,7 +82,10 @@ class _MyAppState extends State<MyApp> {
           ? const LoginScreen()
           : Obx(
               () => _authenticationController.isLoading.value
-                  ? const Center(child: CircularProgressIndicator())
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                      strokeWidth: 1,
+                    ))
                   : _authenticationController.isPatient.value
                       ? const LandingPage()
                       : const DoctorHomepage(),

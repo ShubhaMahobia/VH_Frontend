@@ -187,6 +187,34 @@ class AuthenticationController extends GetxController {
     await FirebaseAuth.instance.signOut().then((value) =>
         Get.to(() => const LoginScreen(), transition: Transition.noTransition));
   }
+
+
+  Future<bool> isUserPatient() async {
+    isLoading.value = true;
+    String body = json.encode({
+      "firebaseUserId": FirebaseAuth.instance.currentUser!.uid,
+    });
+    http.Response res = await http.post(
+      Uri.parse(
+          'https://nirogbharatbackend.azurewebsites.net/api/defineUser'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+      headers: {'Content-Type': 'application/json'},
+      body: body,
+    );
+    var jsonData = json.decode(res.body);
+    if (jsonData['success'] == true) {
+      isLoading.value = false;
+      return jsonData['isPatient'];
+    } else {
+      isLoading.value = false;
+      ErrorSnackBar(textMsg: 'Something Went Wrong')
+          .show(Get.context as BuildContext);
+      return jsonData['isPatient'];
+    }
+  }
+
+
+
+
 }
 
 
