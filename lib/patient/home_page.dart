@@ -253,11 +253,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                         Row(
                                           children: [
                                             CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                patientController
-                                                        .allDoctors[index]
-                                                    ['profilePicture'],
-                                              ),
+                                              // backgroundImage: NetworkImage(
+                                              //   // patientController
+                                              //   //         .allDoctors[index]
+                                              //   //     ['profilePicture'],
+                                              // ),
                                               radius: 18,
                                             ),
                                             Padding(
