@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/doctor/create_pres.dart';
@@ -200,11 +201,15 @@ class _PatientHomePageState extends State<PatientHomePage> {
                             style: GoogleFonts.plusJakartaSans(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            'View All',
-                            style: GoogleFonts.plusJakartaSans(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600),
+                          GestureDetector(
+                            onTap: () =>
+                                Get.to(() => BookAppointmentAllDoctor()),
+                            child: Text(
+                              'View All',
+                              style: GoogleFonts.plusJakartaSans(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           )
                         ],
                       ),
