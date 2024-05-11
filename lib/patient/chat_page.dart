@@ -24,7 +24,40 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final GlobalController _globalController = GlobalController();
+  final ScrollController _scrollController = ScrollController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        Future.delayed(Duration(milliseconds: 500), () {
+          scrollDown();
+        });
+      }
+    });
+
+    Future.delayed(Duration(milliseconds: 500), () {
+      scrollDown();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  void scrollDown() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
 
   //Send message
   void sendMessage() {
@@ -32,7 +65,9 @@ class _ChatPageState extends State<ChatPage> {
       _globalController.sendMessage(_messageController.text, widget.receiverId);
       _messageController.clear();
       _messageController.clear();
+      
     }
+    scrollDown();
   }
 
   @override
@@ -73,6 +108,7 @@ class _ChatPageState extends State<ChatPage> {
             ));
           }
           return ListView(
+            controller: _scrollController,
             children: snapshot.data!.docs
                 .map<Widget>((doc) => _buildMessageItem(doc))
                 .toList(),
@@ -111,6 +147,7 @@ class _ChatPageState extends State<ChatPage> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextField(
+              focusNode: focusNode,
               controller: _messageController,
               style: GoogleFonts.plusJakartaSans(),
               decoration: InputDecoration(
