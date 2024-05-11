@@ -66,6 +66,12 @@ class _ChatPageState extends State<ChatPage> {
           if (snapshot.hasError) {
             return const Center(child: Text('Error occured'));
           }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+                child: CircularProgressIndicator(
+              strokeWidth: 1.0,
+            ));
+          }
           return ListView(
             children: snapshot.data!.docs
                 .map<Widget>((doc) => _buildMessageItem(doc))
