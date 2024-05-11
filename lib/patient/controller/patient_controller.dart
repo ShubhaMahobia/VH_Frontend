@@ -13,6 +13,7 @@ class PatientController extends GetxController {
   RxString lat = "".obs;
   RxString long = "".obs;
   var allDoctors = [];
+  var allPatients = [];
   var hospitals = [];
   var singleHospital = [];
 //Function to fetch user details which will take email as body
@@ -64,6 +65,31 @@ class PatientController extends GetxController {
       if (jsonData['success']) {
         isLoading.value = false;
         allDoctors = jsonData['data'];
+        update();
+      } else {
+        isLoading.value = false;
+        ErrorSnackBar(
+          textMsg: 'Internal Server Error',
+        ).show(Get.context as BuildContext);
+      }
+    } catch (e) {
+      isLoading.value = false;
+      ErrorSnackBar(textMsg: e.toString()).show(Get.context as BuildContext);
+    }
+  }
+  Future<void> fetchAllPatient() async {
+    isLoading.value = true;
+    try {
+      http.Response res = await http.get(
+        Uri.parse(
+            'https://nirogbharatbackend.azurewebsites.net/api/getAllPatients'), // Replace YOUR_SERVER_ADDRESS with the correct server address
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      var jsonData = json.decode(res.body);
+      if (jsonData['success']) {
+        isLoading.value = false;
+        allPatients = jsonData['data'];
         update();
       } else {
         isLoading.value = false;

@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_hospital/common/commonControllers/authentication_controller.dart';
 import 'package:virtual_hospital/doctor/authentication/create_profile_doctor.dart';
 import 'package:virtual_hospital/doctor/doctor_homepage.dart';
-import 'package:virtual_hospital/doctor/doctor_profile.dart';
 import 'package:virtual_hospital/services/firebase_auth_services.dart';
 import 'package:virtual_hospital/util/snackbar/error_snackbar.dart';
 import 'package:http/http.dart' as http;
