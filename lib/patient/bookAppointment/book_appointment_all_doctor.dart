@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:virtual_hospital/patient/bookAppointment/book_appointment_doctor_detail.dart';
 import 'package:virtual_hospital/patient/chat_page.dart';
 import 'package:virtual_hospital/patient/controller/patient_controller.dart';
 import 'package:virtual_hospital/patient/profile_page.dart';
@@ -153,6 +152,11 @@ class _BookAppointmentAllDoctor extends State<BookAppointmentAllDoctor> {
                                               onTap: () {
                                                 Get.to(
                                                   () => ChatPage(
+                                                    name: filteredDoctors[index]
+                                                            ['firstName'] +
+                                                        ' ' +
+                                                        filteredDoctors[index]
+                                                            ['lastName'],
                                                     recevierEmail:
                                                         filteredDoctors[index]
                                                             ['email'],

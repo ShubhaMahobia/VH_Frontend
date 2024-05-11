@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/doctor/controllers/doctor_controller.dart';
 import 'package:virtual_hospital/doctor/create_pres.dart';
 import 'package:virtual_hospital/doctor/doctor_profile.dart';
+import 'package:virtual_hospital/patient/chat_page.dart';
+import 'package:virtual_hospital/patient/controller/patient_controller.dart';
 
 class DoctorHomepage extends StatefulWidget {
   const DoctorHomepage({super.key});
@@ -17,6 +17,12 @@ class DoctorHomepage extends StatefulWidget {
 class _DoctorHomepageState extends State<DoctorHomepage> {
 
   final DoctorController doctorController = Get.put(DoctorController());
+  final PatientController patientController = Get.put(PatientController());
+  @override
+  void initState() {
+    patientController.fetchAllPatient();
+    super.initState();
+  }
 
  
   @override
@@ -61,10 +67,10 @@ class _DoctorHomepageState extends State<DoctorHomepage> {
                       Get.to(() => const ProfilePageDoctor(),
                           transition: Transition.noTransition);
                     },
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 16,
-                      backgroundImage:
-                          NetworkImage(controller.doctor['profilePicture']),
+                      // backgroundImage:
+                      //     NetworkImage(controller.doctor['profilePicture']),
                     ),
                   ),
                 ],
@@ -236,24 +242,47 @@ class _DoctorHomepageState extends State<DoctorHomepage> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 4,
-                      itemBuilder: (BuildContext context, int index) {
+                    child: GetBuilder<PatientController>(
+                      builder: (controller) {
+                        var item = controller.allPatients;
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: item.length,
+                          itemBuilder: (BuildContext context, int index) {
                         return ListTile(
-                          trailing: const Icon(Icons.chat_outlined),
+                              trailing: GestureDetector(
+                                  onTap: () {
+                                    Get.to(
+                                        () => ChatPage(
+                                            name: controller.allPatients[index]
+                                                    ['firstName'] +
+                                                ' ' +
+                                                controller.allPatients[index]
+                                                    ['LastName'],
+                                            recevierEmail: controller
+                                                .allPatients[index]['Email'],
+                                            receiverId:
+                                                controller.allPatients[index]
+                                                    ['firebaseUserId']),
+                                        transition: Transition.noTransition);
+                                  },
+                                  child: const Icon(Icons.chat_outlined)),
                           title: Text(
-                            'John Doe',
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                                controller.allPatients[index]['firstName'] +
+                                    ' ' +
+                                    controller.allPatients[index]['LastName'],
+                                style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(
-                            'mahobiashubham4@gmail.com',
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey),
+                                controller.allPatients[index]['Email'],
+                                style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.grey),
                           ),
+                        );
+                          },
                         );
                       },
                     ),
@@ -265,10 +294,9 @@ class _DoctorHomepageState extends State<DoctorHomepage> {
                 GestureDetector(
                   onTap: () {
                     Get.to(() => GeneratePrescription(
-                          doctorName: 'Dr. ' +
-                              controller.doctor['firstName'] +
-                              ' ' +
-                              controller.doctor['lastName'],
+                          doctorName: controller.doctor['lastName'] +
+                              // ignore: prefer_interpolation_to_compose_strings
+                              '${'Dr. ' + controller.doctor['firstName']} ',
                           doctorId: controller.doctor['firstName'],
                         ));
                   },

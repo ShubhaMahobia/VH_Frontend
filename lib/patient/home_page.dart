@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/doctor/create_pres.dart';
@@ -203,7 +202,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           ),
                           GestureDetector(
                             onTap: () =>
-                                Get.to(() => BookAppointmentAllDoctor()),
+                                Get.to(() => const BookAppointmentAllDoctor()),
                             child: Text(
                               'View All',
                               style: GoogleFonts.plusJakartaSans(
@@ -257,7 +256,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                       children: [
                                         Row(
                                           children: [
-                                            CircleAvatar(
+                                            const CircleAvatar(
                                               // backgroundImage: NetworkImage(
                                               //   // patientController
                                               //   //         .allDoctors[index]

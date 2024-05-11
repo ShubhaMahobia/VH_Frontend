@@ -1,14 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
+import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/common/commonControllers/global_controller.dart';
+import 'package:virtual_hospital/common/components/chat_bubble.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage(
-      {super.key, required this.recevierEmail, required this.receiverId});
+      {super.key,
+      required this.recevierEmail,
+      required this.receiverId,
+      required this.name});
 
   final String recevierEmail;
   final String receiverId;
+  final String name;
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -17,7 +24,40 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final GlobalController _globalController = GlobalController();
+  final ScrollController _scrollController = ScrollController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        Future.delayed(Duration(milliseconds: 500), () {
+          scrollDown();
+        });
+      }
+    });
+
+    Future.delayed(Duration(milliseconds: 500), () {
+      scrollDown();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  void scrollDown() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
 
   //Send message
   void sendMessage() {
@@ -25,12 +65,21 @@ class _ChatPageState extends State<ChatPage> {
       _globalController.sendMessage(_messageController.text, widget.receiverId);
       _messageController.clear();
       _messageController.clear();
+      
     }
+    scrollDown();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+            title: Text(widget.name),
+            centerTitle: true,
+            titleTextStyle: GoogleFonts.plusJakartaSans(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Colors.black)),
         body: Column(
       children: [
         Expanded(
@@ -53,10 +102,13 @@ class _ChatPageState extends State<ChatPage> {
             return const Center(child: Text('Error occured'));
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              strokeWidth: 1.0,
+            ));
           }
-
           return ListView(
+            controller: _scrollController,
             children: snapshot.data!.docs
                 .map<Widget>((doc) => _buildMessageItem(doc))
                 .toList(),
@@ -66,8 +118,19 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessageItem(doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return ListTile(
-      title: Text(data['message']),
+    bool isCurrentUser = data['senderId'] == _auth.currentUser!.uid;
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        vertical: 2,
+        horizontal: 10,
+      ),
+      child: Column(
+        crossAxisAlignment:
+            isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          ChatBubble(message: data['message'], isCurrentUser: isCurrentUser)
+        ],
+      ),
     );
   }
 
@@ -75,16 +138,43 @@ class _ChatPageState extends State<ChatPage> {
     return Row(
       children: [
         Expanded(
-          child: TextField(
-            controller: _messageController,
-            decoration: const InputDecoration(hintText: 'Enter message'),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            height: 50,
+            width: MediaQuery.of(context).size.width * 0.9,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TextField(
+              focusNode: focusNode,
+              controller: _messageController,
+              style: GoogleFonts.plusJakartaSans(),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Type a message...',
+                hintStyle: GoogleFonts.plusJakartaSans(),
+              ),
+            ),
           ),
         ),
-        IconButton(
-          onPressed: sendMessage,
-          icon: const Icon(Icons.send),
+        Container(
+          height: 50,
+          width: 50,
+          decoration: BoxDecoration(
+            color: Colors.blueAccent,
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: IconButton(
+            onPressed: sendMessage,
+            icon: const Icon(
+              Icons.send,
+              color: Colors.white,
+            ),
+          ),
         )
       ],
     );
   }
+
 }
