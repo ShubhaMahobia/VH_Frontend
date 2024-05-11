@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/patient/bookAppointment/book_appointment_doctor_detail.dart';
+import 'package:virtual_hospital/patient/chat_page.dart';
 import 'package:virtual_hospital/patient/controller/patient_controller.dart';
 import 'package:virtual_hospital/patient/profile_page.dart';
 
@@ -84,7 +85,7 @@ class _BookAppointmentAllDoctor extends State<BookAppointmentAllDoctor> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                     padding: const EdgeInsets.all(8),
-                                    height: 120,
+                                    height: 75,
                                     width: 250,
                                     margin: const EdgeInsets.all(8.0),
                                     decoration: BoxDecoration(
@@ -107,13 +108,15 @@ class _BookAppointmentAllDoctor extends State<BookAppointmentAllDoctor> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             CircleAvatar(
                                               backgroundImage: NetworkImage(
                                                   patientController
                                                           .allDoctors[index]
                                                       ['profilePicture']),
-                                              radius: 25,
+                                              radius: 20,
                                             ),
                                             Padding(
                                               padding:
@@ -124,7 +127,7 @@ class _BookAppointmentAllDoctor extends State<BookAppointmentAllDoctor> {
                                                 children: [
                                                   //Patient Name
                                                   Text(
-                                                    'Dr ${filteredDoctors[index]['firstName']} ${filteredDoctors[index]['LastName']}',
+                                                    'Dr ${filteredDoctors[index]['firstName']} ${filteredDoctors[index]['lastName']}',
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
                                                             color: Colors.black,
@@ -135,7 +138,7 @@ class _BookAppointmentAllDoctor extends State<BookAppointmentAllDoctor> {
                                                   //Patient Email
                                                   Text(
                                                     filteredDoctors[index]
-                                                            ['SpecializedField']
+                                                            ['specializedField']
                                                         .toString(),
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
@@ -145,38 +148,18 @@ class _BookAppointmentAllDoctor extends State<BookAppointmentAllDoctor> {
                                                   )
                                                 ],
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  filteredDoctors[index]
-                                                      ['Experience'],
-                                                  style: GoogleFonts
-                                                      .plusJakartaSans(
-                                                          color: Colors.black,
-                                                          fontSize: 12),
-                                                ),
-                                                Text(
-                                                    filteredDoctors[index]
-                                                        ['degree'],
-                                                    style: GoogleFonts
-                                                        .plusJakartaSans(
-                                                            color: Colors.black,
-                                                            fontSize: 10)),
-                                              ],
                                             ),
                                             GestureDetector(
                                               onTap: () {
                                                 Get.to(
-                                                  () => const DoctorDetail(),
+                                                  () => ChatPage(
+                                                    recevierEmail:
+                                                        filteredDoctors[index]
+                                                            ['email'],
+                                                    receiverId:
+                                                        filteredDoctors[index]
+                                                            ['firebaseUserId'],
+                                                  ),
                                                   transition:
                                                       Transition.noTransition,
                                                 );
@@ -184,13 +167,14 @@ class _BookAppointmentAllDoctor extends State<BookAppointmentAllDoctor> {
                                               child: const CircleAvatar(
                                                 backgroundColor: Colors.blue,
                                                 child: Icon(
-                                                  Icons.add,
+                                                  Icons.message_outlined,
                                                   color: Colors.white,
                                                 ),
                                               ),
-                                            ),
+                                            )
                                           ],
-                                        )
+                                        ),
+                                        
                                       ],
                                     ),
                                   ));
