@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_hospital/doctor/controllers/doctor_controller.dart';
 import 'package:virtual_hospital/doctor/create_pres.dart';
 import 'package:virtual_hospital/doctor/doctor_profile.dart';
+import 'package:virtual_hospital/doctor/view_all_patients.dart';
 import 'package:virtual_hospital/patient/chat_page.dart';
 import 'package:virtual_hospital/patient/controller/patient_controller.dart';
 
@@ -224,10 +226,16 @@ class _DoctorHomepageState extends State<DoctorHomepage> {
                         style: GoogleFonts.plusJakartaSans(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        'View All',
-                        style: GoogleFonts.plusJakartaSans(
-                            color: Colors.blue, fontWeight: FontWeight.w600),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => const AllPatients(),
+                              transition: Transition.noTransition);
+                        },
+                        child: Text(
+                          'View All',
+                          style: GoogleFonts.plusJakartaSans(
+                              color: Colors.blue, fontWeight: FontWeight.w600),
+                        ),
                       )
                     ],
                   ),
